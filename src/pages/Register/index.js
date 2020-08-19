@@ -1,12 +1,21 @@
 import React from 'react'
 import { Container } from './styles'
+import {
+  faEnvelope,
+  faLock,
+  faUser
+} from '@fortawesome/free-solid-svg-icons'
 
 import useForm from '../../hooks/useForm';
 
 import api from '../../services/api';
-import NavLink from '../../components/NavLink';
+import {login} from '../../utils/auth';
 
-export default function Register() {
+import NavLink from '../../components/NavLink';
+import InputBlock from '../../components/InputBlock';
+import InputButton from '../../components/Buttons/InputButton';
+
+export default function Register(props) {
   const [{values}, handleChange, handleSubmit] = useForm();
 
   const callback = async () => {
@@ -18,7 +27,7 @@ export default function Register() {
       password,
       date_of_birth
     }).then((response) => {
-      console.log(response);
+      props.history.push('/login');
     }).catch((err) => {
       console.log(err);
     })
@@ -28,40 +37,31 @@ export default function Register() {
     <Container>
       <form onSubmit = {handleSubmit(callback)}>
         <h2>Cadastrar-se</h2>
-        <div>
-          <input
-            type = "text"
-            name = "full_name"
-            placeholder = "Nome completo"
-            onChange = {handleChange}
-          />
-        </div>
-        <div>
-          <input
-            type = "text"
-            name = "email"
-            placeholder = "Email"
-            onChange = {handleChange}
-          />
-        </div>
-        <div>
-          <input
-            type = "password"
-            name = "password"
-            placeholder = "Senha"
-            onChange = {handleChange}
-          />
-        </div>
-        <div>
-          <label>Data de nascimento: </label>
-          <input type = "date"
-            name = "date_of_birth"
-            onChange = {handleChange}
-          />
-        </div>
-        <div>
-          <button type = "submit">Cadastrar</button>
-        </div>
+        <InputBlock
+          inputType = "text"
+          name = "full_name"
+          id = "full_name"
+          placeholder = "Nome completo"
+          icon = {faUser}
+          onChange = {handleChange}
+        />
+        <InputBlock
+          inputType = "text"
+          name = "email"
+          id = "email"
+          placeholder = "Email"
+          icon = {faEnvelope}
+          onChange = {handleChange}
+        />
+        <InputBlock
+           inputType = "password"
+           name = "password"
+           id = "password"
+           placeholder = "Senha"
+           icon = {faLock}
+           onChange = {handleChange}
+        />
+        <InputButton type = "submit" text = "Cadastrar"/>
 
         <NavLink text = "Já tenho uma conta !" path = "/login" />
       </form>

@@ -11,6 +11,7 @@ export const Container = styled.div`
   align-items: center;
 
   form {
+    position: relative;
     width: 400px;
     height: 80%;
 
@@ -24,50 +25,5 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-
-    div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      width: 80%;
-    }
-
-    button {
-      width: 80%;
-      padding: 16px 0;
-
-      background: var(--color-primary);
-
-      border-radius: 0;
-      border: 1px solid;
-      border-color: var(--color-primary);
-      background: var(--color-white);
-      color: var(--color-primary);
-
-      transition: .4s all;
-
-      &:hover{
-        cursor: pointer;
-        border-radius: 50px;
-        border: none;
-        background: var(--color-primary);
-        color: var(--color-white);
-      }
-    }
-
-    input {
-      width: 100%;
-      max-width: 320px;
-      padding: 16px;
-
-      border: none;
-      border-bottom: 1px solid;
-      border-color: var(--color-gray);
-    }
-
-    input[type=date] {
-      width: 180px;
-    }
   }
 `;

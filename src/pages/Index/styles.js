@@ -2,8 +2,10 @@ import styled from 'styled-components';
 
 export const NavBar = styled.div`
   position: fixed;
-  height: 60px;
+  height: 70px;
   width: 100vw;
+
+  z-index: 1000;
 
   background: var(--color-primary);
 
@@ -14,6 +16,20 @@ export const NavBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--color-white);
+    font-style: italic;
+
+    img{
+      max-width: 70px;
+    }
+  }
+
   ul {
     width: 100%;
 
@@ -49,14 +65,19 @@ export const NavBar = styled.div`
       cursor: pointer;
     }
   }
-
-
 `;
 
 export const Introduction = styled.div`
   height: 100vh;
 
   background: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  color: var(--color-white);
+  text-align: center;
+
 `;
 
 export const ViewAroundMap = styled.div`
