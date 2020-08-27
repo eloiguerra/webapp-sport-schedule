@@ -1,8 +1,5 @@
 export const login = (response) => {
-  localStorage.setItem('login', JSON.stringify({
-    login: true,
-    token: response.data
-  }))
+  localStorage.setItem('login', response.data)
 }
 
 export const logout = () => {

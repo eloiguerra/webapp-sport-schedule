@@ -5,31 +5,18 @@ export const InputContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 80%;
-
-  @media (max-width: 360px){
-    width: 95%;
-  }
-
+  width: 100%;
 
   label{
-      position: absolute;
-      left: 45px;
-      color: var(--color-gray);
-
-      @media(min-width: 320px){
-        left: 20px;
-      }
-
-      @media(min-width: 360px){
-        left: 40px;
-      }
-    }
+    position: absolute;
+    left: 40px;
+    color: var(--color-gray);
+  }
 
   input {
     width: 100%;
     max-width: 320px;
-    padding: 16px 30px;
+    padding: 16px 24px;
 
     border: none;
     border-bottom: 1px solid;

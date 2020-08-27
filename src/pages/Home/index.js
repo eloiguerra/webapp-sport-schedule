@@ -1,12 +1,42 @@
 import React from 'react'
-import NavBar from '../../components/NavBar';
-import SideBar from '../../components/SideBar';
 
-export default function Home() {
+import Container from './styles';
+
+import useForm from '../../hooks/useForm';
+
+import api from '../../services/api';
+
+import {logout} from '../../utils/auth';
+
+export default function Home(props) {
+  const [{values}, handleChange, handleSubmit] = useForm();
+
+  const disconnect = () => {
+    logout();
+    props.history.push('/');
+  }
+
+  const searchUsers = async () => {
+    const {full_name} = values;
+    await api.get(`/users/${full_name}`)
+    .then(response => {
+      console.log(response);
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
   return (
-    <>
-    <SideBar />
-    <NavBar />
-    </>
+    <Container>
+      {/* <NavBar logout = {disconnect} /> */}
+      <form onSubmit = {handleSubmit(searchUsers)}>
+        <input
+          type = "text"
+          name = "full_name"
+          onChange = {handleChange}
+        />
+        <button type = "submit">Fazer amiguinhos</button>
+      </form>
+    </Container>
   )
 }

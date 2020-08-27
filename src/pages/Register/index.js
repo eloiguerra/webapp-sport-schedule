@@ -35,6 +35,7 @@ export default function Register(props) {
 
   return (
     <Container>
+      {/* <img src = {} alt = "" /> */}
       <form onSubmit = {handleSubmit(callback)}>
         <h2>Cadastrar-se</h2>
         <InputBlock

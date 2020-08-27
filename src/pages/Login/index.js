@@ -8,6 +8,8 @@ import {
   faLock
 } from '@fortawesome/free-solid-svg-icons'
 
+import loginJudge from '../../assets/images/loginJudge.jpg';
+
 import api from '../../services/api';
 import {login} from '../../utils/auth';
 
@@ -34,29 +36,34 @@ export default function Login(props) {
 
   return (
     <Container>
-      <form onSubmit = {handleSubmit(callback)}>
-        <h2>Realizar login</h2>
-        <InputBlock
-          inputType = "text"
-          name = "email"
-          id = "email"
-          placeholder = "Email"
-          icon = {faEnvelope}
-          onChange = {handleChange}
-        />
-        <InputBlock
-          inputType = "password"
-          name = "password"
-          id = "password"
-          placeholder = "Senha"
-          icon = {faLock}
-          onChange = {handleChange}
-        />
+      <div className = "image-container">
+        <img width = "100%" height = "100%" src = {loginJudge} alt = ""/>
+      </div>
+      <div className = "form-container">
+        <form onSubmit = {handleSubmit(callback)}>
+          <h2>Realizar login</h2>
+          <InputBlock
+            inputType = "text"
+            name = "email"
+            id = "email"
+            placeholder = "Email"
+            icon = {faEnvelope}
+            onChange = {handleChange}
+          />
+          <InputBlock
+            inputType = "password"
+            name = "password"
+            id = "password"
+            placeholder = "Senha"
+            icon = {faLock}
+            onChange = {handleChange}
+          />
 
-        <InputButton type = "submit" text = "Acessar" />
+          <InputButton type = "submit" text = "Acessar" />
 
-        <NavLink text = "Criar uma conta?" path = "/register" />
-      </form>
+          <NavLink text = "Criar uma conta?" path = "/register" />
+        </form>
+      </div>
     </Container>
   )
 }

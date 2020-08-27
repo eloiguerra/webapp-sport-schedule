@@ -7,17 +7,16 @@ export const Container = styled.div`
   background: var(--color-primary);
 
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 
   form {
     position: relative;
-    width: 400px;
+    min-width: 300px;
+    width: 50%;
     height: 80%;
-
+    padding: 16px;
     background: var(--color-white);
-
-    border-radius: 8px;
 
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 
