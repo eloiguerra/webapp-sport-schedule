@@ -6,6 +6,7 @@ import Index from './pages/Index';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 export default function routes() {
   const PrivateRoute = ({component: Component, ...rest}) => {
@@ -24,6 +25,7 @@ export default function routes() {
       <Route path = "/login" component = {Login} />
       <Route path = "/register" component = {Register} />
       <PrivateRoute path = "/home" component = {Home} />
+      <PrivateRoute path = "/users" component = {Profile} />
     </Switch>
   )
 }
