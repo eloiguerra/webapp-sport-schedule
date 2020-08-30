@@ -9,7 +9,7 @@ const Container = styled.div`
     top: 0;
 
     .top-menu{
-      width: calc(100% - 80px);
+      width: 100%;
       background: var(--color-white);
       height: 100%;
       border-top-right-radius: 20px;

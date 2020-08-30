@@ -7,6 +7,7 @@ import useForm from '../../hooks/useForm';
 import api from '../../services/api';
 
 import {logout} from '../../utils/auth';
+import NavBarHome from '../../components/NavBars/NavBarHome';
 
 export default function Home(props) {
   const [{values}, handleChange, handleSubmit] = useForm();
@@ -28,15 +29,15 @@ export default function Home(props) {
 
   return (
     <Container>
-      {/* <NavBar logout = {disconnect} /> */}
-      <form onSubmit = {handleSubmit(searchUsers)}>
+      <NavBarHome logout = {disconnect} />
+      {/* <form onSubmit = {handleSubmit(searchUsers)}>
         <input
           type = "text"
           name = "full_name"
           onChange = {handleChange}
         />
         <button type = "submit">Fazer amiguinhos</button>
-      </form>
+      </form> */}
     </Container>
   )
 }

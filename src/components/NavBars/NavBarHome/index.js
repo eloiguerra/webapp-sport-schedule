@@ -14,7 +14,6 @@ import {
 
 import logo from '../../../assets/images/miniLogo.png';
 
-
 export default function NavBarHome({logout}) {
   const [visibleSideBar, setVisibleSideBar] = useState(false);
   const [visibleDropdownConfig, setVisibleDropdownConfig] = useState(false);
