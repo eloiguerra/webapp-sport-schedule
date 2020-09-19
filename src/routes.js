@@ -26,6 +26,7 @@ export default function routes() {
       <Route path = "/register" component = {Register} />
       <PrivateRoute path = "/home" component = {Home} />
       <PrivateRoute path = "/users" component = {Profile} />
+      {/* <PrivateRoute path = "/users/:id" component = {Profile} /> */}
     </Switch>
   )
 }

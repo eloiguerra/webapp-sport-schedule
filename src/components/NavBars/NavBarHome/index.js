@@ -1,5 +1,9 @@
 import React, {useState} from 'react'
-import Container from './styles';
+
+import {useHistory} from 'react-router-dom';
+import {logout} from '../../../utils/auth';
+
+import Container, {Hamburguer} from './styles';
 
 import NavLink from '../../NavLink';
 
@@ -14,12 +18,20 @@ import {
 
 import logo from '../../../assets/images/miniLogo.png';
 
-export default function NavBarHome({logout}) {
-  const [visibleSideBar, setVisibleSideBar] = useState(false);
+export default function NavBarHome() {
+  const history = useHistory();
+  const [visibleSideBar, setVisibleSideBar] = useState(true);
   const [visibleDropdownConfig, setVisibleDropdownConfig] = useState(false);
 
   const toggleSideBar = () => setVisibleSideBar(!visibleSideBar);
   const toggleDropdownConfig = () => setVisibleDropdownConfig(!visibleDropdownConfig);
+
+  const goToHome = () => history.push('/home');
+
+  const exit = () => {
+    logout();
+    history.push('/');
+  }
 
   return (
     <Container
@@ -27,13 +39,13 @@ export default function NavBarHome({logout}) {
       visibleDropdownConfig = {visibleDropdownConfig}
     >
       <div className = "top-navbar">
-        <div onClick = {toggleSideBar} className = "hamburguer">
+        <Hamburguer onClick = {toggleSideBar} className = "hamburguer">
           <div></div>
           <div></div>
           <div></div>
-        </div>
+        </Hamburguer>
         <div className = "top-menu">
-          <div className = "logo-container">
+          <div className = "logo-container" onClick = {goToHome}>
             <img className = "logo" src = {logo} alt = "" />
             <p>SportSchedule</p>
           </div>
@@ -49,7 +61,7 @@ export default function NavBarHome({logout}) {
                     path = "/users" icon = {faUser}
                   />
                 </li>
-                 <li onClick = {logout}>
+                 <li onClick = {exit}>
                   <FontAwesomeIcon icon = {faDoorOpen} /> Sair
                 </li>
                </ul>
@@ -60,11 +72,20 @@ export default function NavBarHome({logout}) {
       <div className = "sidebar">
         <ul>
           <li>
-            <span className = "icon"> <FontAwesomeIcon icon = {faUser} /> </span>
-            <span className = "title"> Meu perfil </span>
+            <span className = "icon">
+              <NavLink
+                color = "white"
+                path = "/users"
+                icon = {faUser}
+              />
+            </span>
+            <span className = "title">
+              Meu perfil
+            </span>
           </li>
         </ul>
       </div>
     </Container>
   )
 }
+

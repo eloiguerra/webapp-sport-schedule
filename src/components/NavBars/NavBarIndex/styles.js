@@ -4,7 +4,7 @@ export const ToggleNavBar = styled.div`
   display: none;
   position: absolute;
   top: .75rem;
-  right: 1rem;
+  right: 1.5rem;
 
   flex-direction: column;
   justify-content: space-between;
@@ -53,45 +53,69 @@ const Container = styled.nav`
       width: 80px;
     }
   }
+
   @media screen and (max-width: 700px){
     flex-direction: column;
     align-items: flex-start;
   }
+
   .navbar-links {
     @media screen and (max-width: 700px){
       display: ${props => props.visible ? 'flex' : 'none'};
     }
   }
+
   .navbar-links ul{
     display: flex;
     align-items: center;
 
-    @media screen and (max-width: 700px){
-      width: 100vw;
-      flex-direction: column;
-    }
-  }
-  .navbar-links li{
-    color: var(--color-white);
-    padding: 16px;
-
-    display: block;
-
-    a{
-      color: var(--color-white);
-    }
-
-    cursor: pointer;
-
-    transition: .4s all;
-
-    &:hover{
-      background: var(--color-gray);
+    @media screen and (min-width: 701px){
+      margin-right: 16px;
     }
 
     @media screen and (max-width: 700px){
       width: 100%;
+      flex-direction: column;
+    }
+  }
+
+  .navbar-links li{
+    color: var(--color-white);
+
+    display: block;
+
+    a{
+      position: relative;
+      color: var(--color-white);
+
+      @media screen and (min-width: 701px){
+        &::after{
+          content: "";
+
+          position: absolute;
+          left: 0;
+          top: 45px;
+
+          width: 0%;
+          height: 3px;
+          background: var(--color-tertiary);
+          transition: all .4s;
+        }
+
+        &:hover::after{
+          width: 100%;
+        }
+      }
+    }
+
+    @media screen and (min-width: 701px){
+      padding: 0 16px;
+    }
+
+    @media screen and (max-width: 700px){
+      width: 100vw;
       text-align: center;
+      padding: 16px 0;
     }
   }
 `;

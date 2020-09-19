@@ -1,14 +1,14 @@
 import React from 'react'
 import { Container } from './styles'
 
+import logo from '../../assets/images/miniLogo.png';
+
 import useForm from '../../hooks/useForm';
 
 import {
   faEnvelope,
   faLock
-} from '@fortawesome/free-solid-svg-icons'
-
-import loginJudge from '../../assets/images/loginJudge.jpg';
+} from '@fortawesome/free-solid-svg-icons';
 
 import api from '../../services/api';
 import {login} from '../../utils/auth';
@@ -36,11 +36,13 @@ export default function Login(props) {
 
   return (
     <Container>
-      <div className = "image-container">
-        <img width = "100%" height = "100%" src = {loginJudge} alt = ""/>
-      </div>
+      <div className = "image-container"></div>
       <div className = "form-container">
         <form onSubmit = {handleSubmit(callback)}>
+          <div class = "form-head">
+            <img src = {logo} alt = "SportSchedule" />
+            <p>SportSchedule</p>
+          </div>
           <h2>Realizar login</h2>
           <InputBlock
             inputType = "text"

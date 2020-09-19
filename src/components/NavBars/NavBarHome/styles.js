@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  z-index: 1000;
+
   .top-navbar{
     width: 100vw;
     height: 60px;
@@ -25,6 +27,8 @@ const Container = styled.div`
 
         letter-spacing: 1px;
         font: 700 2.5rem Lora;
+
+        cursor: pointer;
 
         .logo{
           height: 65px;
@@ -55,7 +59,7 @@ const Container = styled.div`
             right: 0;
             width: 200px;
             background: var(--color-secondary);
-            display: ${props => props.visibleDropdownConfig ? 'none' : 'flex'};
+            display: ${props => props.visibleDropdownConfig ? 'flex' : 'none'};
             flex-direction: column;
 
             li{
@@ -75,34 +79,11 @@ const Container = styled.div`
         }
       }
     }
-
-    .hamburguer{
-      width: 70px;
-      height: 100%;
-      background: var(--color-secondary);
-      padding: 15px 17px;
-      border-top-left-radius: 20px;
-      cursor: pointer;
-
-      div{
-        width: 35px;
-        height: 4px;
-        background: var(--color-white);
-        margin: 5px 0;
-        border-radius: 5px;
-      }
-    }
   }
 
   .sidebar{
     position: fixed;
-    top: 60px;
-    left: 0;
     background: var(--color-secondary);
-    width: ${props => props.visible ? '70px' : '200px'};
-    height: calc(100%);
-    border-bottom-left-radius: 20px;
-    transition: all .3s ease;
 
     li{
       display: block;
@@ -137,7 +118,40 @@ const Container = styled.div`
         display: ${props => props.visible ? 'none' : 'inline-block'};
       }
     }
+
+    @media screen and (min-width: 601px){
+      top: 60px;
+      left: 0;
+      height: calc(100%);
+      width: ${props => props.visible ? '70px' : '200px'};
+      transition: all .3s ease;
+    }
+
+    @media screen and (max-width: 600px){
+      bottom: 0;
+      width: 100vw;
+    }
   }
+`;
+
+export const Hamburguer = styled.div`
+    width: 70px;
+    height: 100%;
+    background: var(--color-secondary);
+    padding: 15px 17px;
+    cursor: pointer;
+
+    div{
+      width: 35px;
+      height: 4px;
+      background: var(--color-white);
+      margin: 5px 0;
+      border-radius: 5px;
+    }
+
+    @media screen and (max-width: 600px){
+      display: none;
+    }
 `;
 
 export default Container;
