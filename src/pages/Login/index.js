@@ -39,7 +39,7 @@ export default function Login(props) {
       <div className = "image-container"></div>
       <div className = "form-container">
         <form onSubmit = {handleSubmit(callback)}>
-          <div class = "form-head">
+          <div className = "form-head">
             <img src = {logo} alt = "SportSchedule" />
             <p>SportSchedule</p>
           </div>
