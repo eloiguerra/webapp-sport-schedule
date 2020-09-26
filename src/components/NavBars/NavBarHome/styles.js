@@ -38,6 +38,72 @@ const Container = styled.div`
       ul{
         display: flex;
 
+        .search-bar{
+          display: flex;
+          flex-direction: row-reverse;
+
+          border: 1px solid var(--color-secondary);
+          border-radius: 500px;
+
+          transition: width .3s ease-in-out;
+
+          padding: 3px;
+
+          input{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+
+            width: 180px;
+            padding-left: 8px;
+
+            border: 0;
+            background: transparent;
+
+            opacity: 0;
+          }
+
+          button{
+            border: 0;
+            border-radius: 50%;
+
+            width: 35px;
+
+            background: var(--color-white);
+            color: var(--color-secondary);
+
+            cursor: pointer;
+          }
+
+          .searched{
+            position: absolute;
+            top: 45px;
+            left: 0;
+
+            width: 200px;
+            height: 200px;
+
+            background: var(--color-white-two);
+
+            li{
+              color: var(--color-black);
+            }
+          }
+
+          &:focus-within{
+            width: 210px;
+
+            & input{
+              opacity: 1;
+            }
+
+            & .searched{
+              display: ${props => props.visibleSearchedUsers ? 'flex' : 'none'}
+            }
+          }
+        }
+
         li{
           position: relative;
           display: block;
@@ -71,14 +137,21 @@ const Container = styled.div`
             }
           }
 
-          &:hover{
+          &:hover:not(.search-bar, .searched){
             color: var(--color-white);
             background: var(--color-secondary);
             border: 1px solid white;
           }
         }
+
+        @media screen and (max-width: 701px){
+          display: none;
+        }
       }
     }
+    /*@media screen and (max-width: 701px){
+      display: none;
+    }*/
   }
 
   .sidebar{
@@ -119,7 +192,7 @@ const Container = styled.div`
       }
     }
 
-    @media screen and (min-width: 601px){
+    @media screen and (min-width: 701px){
       top: 60px;
       left: 0;
       height: calc(100%);
@@ -127,7 +200,7 @@ const Container = styled.div`
       transition: all .3s ease;
     }
 
-    @media screen and (max-width: 600px){
+    @media screen and (max-width: 700px){
       bottom: 0;
       width: 100vw;
     }
@@ -149,7 +222,7 @@ export const Hamburguer = styled.div`
       border-radius: 5px;
     }
 
-    @media screen and (max-width: 600px){
+    @media screen and (max-width: 700px){
       display: none;
     }
 `;
