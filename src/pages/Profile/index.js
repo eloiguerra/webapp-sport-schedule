@@ -29,7 +29,7 @@ export default function Profile() {
 
   useEffect(() => {
     const getUser = async () => {
-      await api.get(`/users`)
+      await api.get('/users')
       .then(response => (
         setUser(response.data)
       ))
@@ -56,7 +56,7 @@ export default function Profile() {
               </button>
           }
         </div>
-
+        {console.log(user)}
       </Header>
     </Container>
     {modalDescriptionVisible &&
