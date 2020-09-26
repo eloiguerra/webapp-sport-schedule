@@ -40,21 +40,16 @@ export const Content = styled.div`
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: -20px;
-  right: -20px;
+  top: 0px;
+  right: 0px;
 
   width: 40px;
   height: 40px;
 
-  font-size: 1.2em;
+  font-size: 1.1em;
   background-color: var(--color-white);
+  border: none;
 
-  border-radius: 50%;
-  border: 4px solid;
-  border-color: var(--color-primary);
-
-  box-shadow: 0 4px 4px 0 rgba(0,0,0,.3);
-  color: red;
   outline: none;
   cursor: pointer;
 `;
