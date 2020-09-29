@@ -6,6 +6,7 @@ import Container, {FormDescription, Header} from './styles';
 import NavBarHome from '../../components/NavBars/NavBarHome';
 import Textarea from '../../components/Textarea';
 import Modal from '../../components/Modals';
+import LinkButton from '../../components/Buttons/LinkButton';
 
 import api from '../../services/api';
 
@@ -44,21 +45,20 @@ export default function Profile() {
     <>
     <NavBarHome />
     <Container>
-        {console.log(user)}
       <Header>
         <div className = "info">
           <img className = 'profile-photo' src = "https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg" alt = "" />
           <h3>{user.full_name}</h3>
           {user.description
             ? <p>{user.description}</p>
-            : <button onClick = {() => setModalDescriptionVisible(true)}>
+            : <LinkButton onClick = {() => setModalDescriptionVisible(true)}>
                 Adicionar descrição
-              </button>
+              </LinkButton>
           }
         </div>
-        {console.log(user)}
       </Header>
     </Container>
+
     {modalDescriptionVisible &&
       <Modal onClose = {() => setModalDescriptionVisible(false)}>
         <h3 className = "head">Criar uma nova descrição</h3>
