@@ -7,7 +7,7 @@ import useForm from '../../hooks/useForm';
 import api from '../../services/api';
 
 import NavBarHome from '../../components/NavBars/NavBarHome';
-import PostContainer from '../../components/PostContainer';
+// import PostContainer from '../../components/PostContainer';
 
 export default function Home(props) {
   const [{values}, handleChange, handleSubmit] = useForm();
@@ -17,7 +17,7 @@ export default function Home(props) {
     <NavBarHome />
       <Container>
 
-      <PostContainer />
+      {/* <PostContainer /> */}
       {/* <form onSubmit = {handleSubmit(searchUsers)}>
         <input
           type = "text"
