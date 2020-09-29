@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Container } from './styles'
 import {
   faEnvelope,
@@ -17,25 +17,64 @@ import InputButton from '../../components/Buttons/InputButton';
 
 export default function Register(props) {
   const [{values}, handleChange, handleSubmit] = useForm();
+  const [errors, setErrors] = useState({});
 
   const callback = async () => {
     const {full_name, email, password, date_of_birth} = values;
+    let validations = {};
+    let regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    await api.post('/register', {
+    if(!full_name){
+      validations.full_name = 'Campo obrigatório';
+    }
+    else if(full_name.length > 60){
+      validations.full_name = 'Nome muito longo';
+    }
+    else if(full_name.length < 3){
+      validations.full_name = 'Nome muito curto';
+    }
+
+    if(!password){
+      validations.password = 'Campo obrigatório';
+    }
+    else if(password.length > 16){
+      validations.password = 'Senha muito longo';
+    }
+    else if(password.length < 8){
+      validations.password = 'Senha muito curta';
+    }
+
+    if(!email){
+      validations.email = 'Campo obrigatório';
+    }
+    else if(email.length > 40){
+      validations.email = 'Email muito longo';
+    }
+    else if(email.length < 6){
+      validations.email = 'Email muito curto';
+    }
+    else{
+      if(!regexEmail.test(String(email).toLowerCase())){
+        validations.email = 'Email inválido';
+      }
+    }
+
+    validations.email || validations.password || validations.full_name
+    ? setErrors(validations)
+    : await api.post('/register', {
       full_name,
       email,
       password,
       date_of_birth
-    }).then((response) => {
+    }).then(response => {
       props.history.push('/login');
-    }).catch((err) => {
+    }).catch(err => {
       console.log(err);
     })
   }
 
   return (
     <Container>
-      {/* <img src = {} alt = "" /> */}
       <form onSubmit = {handleSubmit(callback)}>
         <h2>Cadastrar-se</h2>
         <InputBlock
@@ -45,6 +84,7 @@ export default function Register(props) {
           placeholder = "Nome completo"
           icon = {faUser}
           onChange = {handleChange}
+          error = {errors.full_name}
         />
         <InputBlock
           inputType = "text"
@@ -53,6 +93,7 @@ export default function Register(props) {
           placeholder = "Email"
           icon = {faEnvelope}
           onChange = {handleChange}
+          error = {errors.email}
         />
         <InputBlock
            inputType = "password"
@@ -61,6 +102,7 @@ export default function Register(props) {
            placeholder = "Senha"
            icon = {faLock}
            onChange = {handleChange}
+           error = {errors.password}
         />
         <InputButton type = "submit" text = "Cadastrar"/>
 
