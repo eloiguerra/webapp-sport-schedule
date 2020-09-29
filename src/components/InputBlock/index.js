@@ -1,9 +1,10 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {InputContainer} from './styles';
+import {InputContainer, Error} from './styles';
 
-export default function InputBlock({inputType, name, id, placeholder, icon, onChange}) {
+export default function InputBlock({inputType, name, id, placeholder, icon, onChange, error}) {
   return (
+    <>
     <InputContainer>
       <label htmlFor = {id}> <FontAwesomeIcon icon = {icon}/> </label>
       <input
@@ -14,5 +15,7 @@ export default function InputBlock({inputType, name, id, placeholder, icon, onCh
         onChange = {onChange}
       />
     </InputContainer>
+    <Error>{error}</Error>
+    </>
   )
 }

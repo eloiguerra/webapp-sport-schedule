@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const InputContainer = styled.div`
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -10,7 +11,7 @@ export const InputContainer = styled.div`
 
   label{
     position: absolute;
-    left: 0px;
+    left: 0;
 
     color: var(--color-gray);
 
@@ -19,7 +20,6 @@ export const InputContainer = styled.div`
 
   input {
     width: 100%;
-    /* max-width: 320px; */
     padding: 16px 24px;
 
     border: none;
@@ -30,4 +30,8 @@ export const InputContainer = styled.div`
   input[type=date] {
     width: 180px;
   }
+`;
+
+export const Error = styled.small`
+  color: var(--color-error);
 `;
