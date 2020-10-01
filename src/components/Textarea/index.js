@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Container from './styles';
 
-export default function Textarea({id = "textarea", label, name, onChange}) {
+export default function Textarea({id = "textarea", label = "", name, onChange}) {
   const [char, setChar] = useState(100);
 
   const remainChar = (remainChar) => setChar(100 - remainChar);
