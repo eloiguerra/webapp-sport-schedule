@@ -23,7 +23,8 @@ export const Header = styled.header`
   flex-direction: column;
   align-items: center;
 
-  background: var(--color-white);
+  background: rgb(243,243,245);
+background: linear-gradient(0deg, rgba(243,243,245,1) 2%, rgba(246,246,246,1) 57%, rgba(255,255,255,1) 99%);
 
   border-bottom: 2px solid var(--color-white-two);
 
