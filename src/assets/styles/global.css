@@ -4,6 +4,7 @@
   --color-white: #fff;
   --color-white-two: #f8f9fa;
   --color-gray: #8d99ae;
+  --color-gray-light: #F2F3F5;
   --color-black: #212529;
   --color-success: #73a942;
   --color-success-light: #aad576;
@@ -27,7 +28,7 @@ html, body, #root{
 }
 
 body{
-  background: var(--color-white);
+  background: var(--color-white-two);
 }
 
 body, input button, textarea{
