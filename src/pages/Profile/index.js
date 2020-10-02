@@ -8,6 +8,11 @@ import Textarea from '../../components/Textarea';
 import Modal from '../../components/Modals';
 import LinkButton from '../../components/Buttons/LinkButton';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+  faCameraRetro
+} from '@fortawesome/free-solid-svg-icons';
+
 import api from '../../services/api';
 
 export default function Profile() {
@@ -31,23 +36,28 @@ export default function Profile() {
   useEffect(() => {
     const getUser = async () => {
       await api.get('/users')
-      .then(response => (
-        setUser(response.data)
-      ))
-      .catch(err => (
+      .then(response => {
+        setUser(response.data);
+      })
+      .catch(err => {
         console.log(err)
-      ))
+      })
     }
+
     getUser();
   }, []);
 
   return (
     <>
     <NavBarHome />
-    <Container>
+    {user.profile_photo &&
+      <Container>
       <Header>
         <div className = "info">
-          <img className = 'profile-photo' src = "https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg" alt = "" />
+          <div class = "photo-container">
+            <img className = 'profile-photo' src = {user.profile_photo.url} alt = "" />
+            <span><FontAwesomeIcon icon = {faCameraRetro}/></span>
+          </div>
           <h3>{user.full_name}</h3>
           {user.description
             ? <p>{user.description}</p>
@@ -57,7 +67,8 @@ export default function Profile() {
           }
         </div>
       </Header>
-    </Container>
+      </Container>
+    }
 
     {modalDescriptionVisible &&
       <Modal onClose = {() => setModalDescriptionVisible(false)}>
