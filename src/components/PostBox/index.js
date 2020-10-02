@@ -16,7 +16,17 @@ export default function PostBox({userData}) {
   const [sports, setSports] = useState();
 
   const newPost = () => {
-    console.log(values);
+    const {sport, description} = values;
+    api.post('/publications', {
+      sport,
+      description
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   useEffect(() => {
@@ -61,7 +71,7 @@ export default function PostBox({userData}) {
               </datalist>
             </header>
             <Textarea
-              name = "post-text"
+              name = "description"
               onChange = {handleChange}
             />
             <InputButton type = "submit" text = "Publicar"/>
