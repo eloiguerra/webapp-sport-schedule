@@ -19,10 +19,36 @@ export const Header = styled.header`
   justify-content: center;
   align-items: center;
 
-  .profile-photo{
-      width: 100px;
-      height: 100px;
+  .photo-container{
+    position: relative;
+
+    .profile-photo{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+
+    span{
+      display: flex;
+      align-items: center;
+
+      position: absolute;
+      right: 40px;
+      bottom: 10px;
+
+      padding: 4px;
+
+      border: 2px solid var(--color-gray);
       border-radius: 50%;
+      background: var(--color-white);
+
+      svg{
+        color: var(--color-gray);
+
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 `;
 
