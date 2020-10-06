@@ -29,7 +29,17 @@ export const Content = styled.div`
 
     border-radius: 500px;
     background: var(--color-gray-light);
+
+    width: 80%;
     cursor: pointer;
+
+    text-align: center;
+  }
+
+  img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 `;
 
@@ -42,5 +52,30 @@ export const FormContainer = styled.form`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    width: 100%;
+
+    .user-info{
+      margin-left: 8px;
+
+      display: flex;
+      align-items: center;
+
+      font-size: 1.6rem;
+      font-weight: 700;
+
+      img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+    }
+
+    input{
+      padding: 8px;
+
+      margin-right: 8px;
+    }
   }
 `;
