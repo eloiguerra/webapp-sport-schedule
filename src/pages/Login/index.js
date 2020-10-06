@@ -23,7 +23,7 @@ export default function Login(props) {
   const [errors, setErrors] = useState([]);
   const [toast, setToast] = useState({});
 
-  const loginValidation = async () => {
+  const loginValidation = () => {
     const {email, password} = values;
 
     let validations = {};
@@ -56,7 +56,7 @@ export default function Login(props) {
 
     validations.email || validations.password
     ? setErrors(validations)
-    : await api.post('/login', {
+    : api.post('/login', {
         email,
         password,
       }).then(response => {
