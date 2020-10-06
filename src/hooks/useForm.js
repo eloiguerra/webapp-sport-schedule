@@ -4,7 +4,7 @@ const useForm = () => {
   const [values, setValues] = useState({ });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const auxValues = { ...values };
     auxValues[event.target.name] = event.target.value;
     setValues(auxValues);
