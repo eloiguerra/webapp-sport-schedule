@@ -9,30 +9,48 @@ import Modal from '../Modals';
 import Textarea from '../Textarea';
 import InputButton from '../Buttons/InputButton';
 
-export default function PostBox({userData}) {
+export default function PostBox({user}) {
   const [{values}, handleChange, handleSubmit] = useForm();
+  const [errors, setErros] = useState({});
 
   const [modalPostVisible, setModalPostVisible] = useState(false);
   const [sports, setSports] = useState();
 
   const newPost = () => {
     const {sport, description} = values;
-    api.post('/publications', {
-      sport,
-      description
-    })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    let validations = {};
+
+    // .toLowerCase().chartAt(0).toUpperCase() depois testa
+    if(!sport){
+      validations.sport = "Campo obrigatório";
+    }
+
+    let validSport = sports.filter(item => item.name === sport);
+    if(!validSport[0]._id){
+      validations.sport = "Esporte não encontrado";
+    }
+
+    if(!description){
+      validations.description = "Campo obrigatório";
+    }
+
+    validations.sport || validations.description
+    ? setErros(validations)
+    : api.post('/publications', {
+        sport: validSport[0]._id,
+        description
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   useEffect(() => {
     api.get('/sports')
     .then(response => {
-      console.log(response);
       setSports(response.data);
     })
     .catch(err => {
@@ -44,24 +62,27 @@ export default function PostBox({userData}) {
     <>
     <Container onClick = {() => setModalPostVisible(true)}>
       <Content>
-        {/* <img src = "" /> */}
+        <img src = {user.profile_photo} alt = "" />
         <input disabled type = "text" value = "Criar uma nova publicação?"/>
-        asd
       </Content>
     </Container>
+
     {modalPostVisible &&
       <Modal onClose = {() => setModalPostVisible(false)}>
         <h3 className = "head">Criar uma nova publicação</h3>
         <div className = "body">
           <FormContainer onSubmit = {handleSubmit(newPost)}>
             <header>
-              {/* <img src = {} /> */}
-              {userData.name}
+              <div className = "user-info">
+                <img src = {user.profile_photo} alt = "" />
+                {user.name}
+              </div>
               <input
                 type = "text"
                 list = "sport-list"
                 placeholder = "Esporte"
                 name = "sport"
+                autoComplete = "off"
                 onChange = {handleChange}
               />
               <datalist id = "sport-list">
