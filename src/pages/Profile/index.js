@@ -1,30 +1,78 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 
 import useForm from '../../hooks/useForm';
 
-import Container, {FormDescription, Header} from './styles';
+import Container, {
+  Header,
+  FormDescription,
+  FormPhoto,
+} from './styles';
 import NavBarHome from '../../components/NavBars/NavBarHome';
 import Textarea from '../../components/Textarea';
 import Modal from '../../components/Modals';
 import LinkButton from '../../components/Buttons/LinkButton';
+import DragDropBox from '../../components/DragDropBox';
+import InputButton from '../../components/Buttons/InputButton';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
-  faCameraRetro
+  faCameraRetro,
+  faImage
 } from '@fortawesome/free-solid-svg-icons';
 
 import api from '../../services/api';
 
 export default function Profile() {
-  const [{values}, handleChange, handleSubmit] = useForm();
+  const [{values, loading}, handleChange, handleSubmit] = useForm();
 
-  const [user, setUser] = useState({})
+  const profilePhotoInputRef = useRef(null);
+
+  const [user, setUser] = useState({});
+  const [profilePhoto, setProfilePhoto] = useState({});
   const [modalDescriptionVisible, setModalDescriptionVisible] = useState(false);
+  const [modalPhotoVisible, setModalPhotoVisible] = useState(false);
 
-  const formDescription = async () => {
+  const handleProfilePhoto = () => {
+    const profilePhotoData = profilePhotoInputRef.current?.files;
+    const reader = new FileReader();
+
+    if(profilePhotoData[0]){
+      reader.onload = () => {
+        if(reader.readyState === 2){
+          setProfilePhoto({
+            preview: reader.result,
+            name: profilePhotoData[0].name,
+            size: profilePhotoData[0].size
+          });
+        }
+      }
+      reader.readAsDataURL(profilePhotoData[0]);
+    }
+    else{
+      setProfilePhoto({
+        name: "",
+        size: ""
+      })
+    }
+  }
+
+  const formPhoto = () => {
+    const profilePhotoData = profilePhotoInputRef.current?.files;
+    const data = new FormData()
+    data.append('file', profilePhotoData[0])
+    api.put('/files', data)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  const formDescription = () => {
     const {description} = values;
 
-    await api.put('/users', {
+    api.put('/users', {
       description
     }).then(response => {
       console.log(response);
@@ -34,10 +82,11 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    const getUser = async () => {
-      await api.get('/users')
+    const getUser = () => {
+       api.get('/users')
       .then(response => {
         setUser(response.data);
+        console.log(response.data);
       })
       .catch(err => {
         console.log(err)
@@ -53,19 +102,23 @@ export default function Profile() {
     {user.profile_photo &&
       <Container>
       <Header>
-        <div className = "info">
-          <div class = "photo-container">
-            <img className = 'profile-photo' src = {user.profile_photo.url} alt = "" />
-            <span><FontAwesomeIcon icon = {faCameraRetro}/></span>
-          </div>
-          <h3>{user.full_name}</h3>
-          {user.description
-            ? <p>{user.description}</p>
-            : <LinkButton onClick = {() => setModalDescriptionVisible(true)}>
-                Adicionar descrição
-              </LinkButton>
-          }
+        <div className = "photo-container">
+          <img
+            onClick = {() => setModalPhotoVisible(true)}
+            className = 'profile-photo'
+            src = {user.profile_photo.url} alt = ""
+          />
+          <button onClick = {() => setModalPhotoVisible(true)}>
+            <FontAwesomeIcon icon = {faCameraRetro}/>
+          </button>
         </div>
+        <h3>{user.full_name}</h3>
+        {user.description
+          ? <p>{user.description}</p>
+          : <LinkButton onClick = {() => setModalDescriptionVisible(true)}>
+              Adicionar descrição
+            </LinkButton>
+        }
       </Header>
       </Container>
     }
@@ -83,6 +136,41 @@ export default function Profile() {
             />
             <button type = "submit">Criar</button>
           </FormDescription>
+        </div>
+      </Modal>
+    }
+
+    {modalPhotoVisible &&
+      <Modal onClose = {() => setModalPhotoVisible(false)}>
+        <h3 className = "head"> Foto de perfil </h3>
+        <div className = "body">
+          <FormPhoto onSubmit = {handleSubmit(formPhoto)}>
+            <div className = "image-container">
+              <img
+                src = {profilePhoto.preview ? profilePhoto.preview : user.profile_photo.url}
+                alt = ""
+              />
+            </div>
+            <div className = "input-container">
+              <label className = "image-upload">
+                <FontAwesomeIcon icon = {faImage} />
+                {profilePhoto.name ? profilePhoto.name : 'Adicionar deste dispositivo'}
+                <input
+                  ref = {profilePhotoInputRef}
+                  type = "file"
+                  onChange = {handleProfilePhoto}
+                  accept = "image/*"
+                />
+              </label>
+              <DragDropBox file = {profilePhoto}>
+
+              </DragDropBox>
+            </div>
+            <InputButton
+              type = "submit"
+              text = "Trocar foto"
+            />
+          </FormPhoto>
         </div>
       </Modal>
     }

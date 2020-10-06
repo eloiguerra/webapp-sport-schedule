@@ -16,37 +16,42 @@ const Container = styled.div`
 export const Header = styled.header`
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 
   .photo-container{
     position: relative;
-
+    /* z-index problema amigo */
     .profile-photo{
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
     }
 
-    span{
+    button{
       display: flex;
       align-items: center;
 
       position: absolute;
-      right: 40px;
-      bottom: 10px;
+      right: 0;
+      bottom: 8px;
 
       padding: 4px;
 
-      border: 2px solid var(--color-gray);
       border-radius: 50%;
-      background: var(--color-white);
+      border: none;
+
+      background: var(--color-gray-light);
+
+      cursor: pointer;
 
       svg{
-        color: var(--color-gray);
-
         width: 20px;
         height: 20px;
+      }
+
+      &:hover{
+        background: var(--color-gray-light);
       }
     }
   }
@@ -85,6 +90,73 @@ export const FormDescription = styled.form`
       border-color: var(--color-white);
       color: var(--color-white);
     }
+  }
+`;
+
+export const FormPhoto = styled.form`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .image-container{
+    img{
+      width: 100%;
+
+      @media screen and (min-width: 701px){
+        width: 250px;
+        height: 250px;
+        /* padding-right: 8px; */
+        /* border-right: 2px solid var(--color-black); */
+        margin-right: 8px;
+      }
+    }
+
+    /* @media screen and (max-width: 700px){
+      max-width: 20px;
+    } */
+
+
+  }
+
+  .input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    label{
+      overflow: hidden;
+
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--color-white);
+
+      background: var(--color-tertiary);
+
+      padding: 4px;
+
+      border-radius: 4px;
+
+      cursor: pointer;
+
+      transition: background .2s;
+
+      &:hover{
+        background: var(--color-secondary);
+      }
+
+      svg{
+        margin-right: 4px;
+      }
+    }
+
+    input{
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 701px){
+    justify-content: space-around;
   }
 `;
 
