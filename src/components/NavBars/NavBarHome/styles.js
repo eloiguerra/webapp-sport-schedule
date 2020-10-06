@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  z-index: 1000;
+  z-index: 99999;
 
   .top-navbar{
     width: 100vw;
