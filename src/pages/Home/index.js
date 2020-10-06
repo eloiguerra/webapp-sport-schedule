@@ -8,12 +8,13 @@ import NavBarHome from '../../components/NavBars/NavBarHome';
 import PostBox from '../../components/PostBox';
 
 export default function Home() {
-  const [userData, setUserData] = useState({});
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     api.get('/users')
     .then(response => {
-      setUserData(response.data);
+      console.log(response);
+      setUser(response.data);
     })
     .catch(err => {
       console.log(err);
@@ -24,11 +25,13 @@ export default function Home() {
     <>
     <NavBarHome />
       <Container>
-        <PostBox userData = {
-          {name: userData.full_name,
-            profilePhoto: userData.profile_photo
-          }}
-        />
+        {user.profile_photo &&
+          <PostBox user = {
+            {name: user.full_name,
+              profile_photo: user.profile_photo.url
+            }}
+          />
+        }
 
       </Container>
     </>
