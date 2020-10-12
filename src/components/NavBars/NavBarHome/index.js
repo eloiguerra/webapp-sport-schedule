@@ -15,14 +15,15 @@ import {
   faBell,
   faCog,
   faUser,
-  faDoorOpen
+  faDoorOpen,
+  faHome
 } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../../../assets/images/miniLogo.png';
 
 export default function NavBarHome() {
   const history = useHistory();
-  const [visibleSideBar, setVisibleSideBar] = useState(true);
+  const [visibleSideBar, setVisibleSideBar] = useState(false);
   const [visibleDropdownConfig, setVisibleDropdownConfig] = useState(false);
   const [visibleSearchedUsers, setVisibleSearchedUsers] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState([]);
@@ -114,7 +115,27 @@ export default function NavBarHome() {
               />
             </span>
             <span className = "title">
-              Meu perfil
+              <NavLink
+                color = "white"
+                path = "/users"
+                text = "Meu perfil"
+              />
+            </span>
+          </li>
+          <li>
+            <span className = "icon">
+              <NavLink
+                color = "white"
+                path = "/home"
+                icon = {faHome}
+              />
+            </span>
+            <span className = "title">
+              <NavLink
+                color = "white"
+                path = "/home"
+                text = "Página inicial"
+              />
             </span>
           </li>
         </ul>
