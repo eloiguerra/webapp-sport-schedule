@@ -21,6 +21,7 @@ export default function VisitProfile() {
   useEffect(() => {
     api.get(`/visit/${id}`)
     .then(response => {
+      console.log(response);
       setUserData(response.data);
     })
     .catch(err => {
@@ -65,14 +66,17 @@ export default function VisitProfile() {
     <>
     <NavBarHome />
     <Container>
-      <Header>
-        <div className = "info">
-          <img className = 'profile-photo' src = "https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg" alt = "" />
-          <h3>{userData.full_name}</h3>
-          {userData.description && <p>{userData.description}</p>}
-        </div>
-        <hr />
-      </Header>
+      {userData.profile_photo &&
+        <Header>
+            <img
+              src = {userData.profile_photo.url}
+              alt = ""
+              />
+            <h3>{userData.full_name}</h3>
+            {userData.description && <p>{userData.description}</p>}
+          <hr />
+        </Header>
+      }
       <Card>
         <h3>Deseja adicionar {userData.full_name} ?</h3>
         {friendData.friend_request ?
