@@ -6,6 +6,7 @@ import api from '../../services/api';
 
 import NavBarHome from '../../components/NavBars/NavBarHome';
 import PostBox from '../../components/PostBox';
+import Feed from '../../components/Feed';
 
 export default function Home() {
   const [user, setUser] = useState({});
@@ -27,12 +28,14 @@ export default function Home() {
       <Container>
         {user.profile_photo &&
           <PostBox user = {
-            {name: user.full_name,
+            {
+              name: user.full_name,
               profile_photo: user.profile_photo.url
             }}
           />
         }
 
+        <Feed />
       </Container>
     </>
   )
