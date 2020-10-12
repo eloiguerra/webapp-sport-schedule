@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 
 import { Container, Content, FormContainer } from './styles'
 
@@ -9,43 +9,75 @@ import Modal from '../Modals';
 import Textarea from '../Textarea';
 import InputButton from '../Buttons/InputButton';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+  faImage
+} from '@fortawesome/free-solid-svg-icons';
+
 export default function PostBox({user}) {
+  const imageInputRef = useRef(null);
+
   const [{values}, handleChange, handleSubmit] = useForm();
   const [errors, setErros] = useState({});
-
   const [modalPostVisible, setModalPostVisible] = useState(false);
-  const [sports, setSports] = useState();
+  const [sports, setSports] = useState([]);
+  const [publication, setPublication] = useState({});
 
-  const newPost = () => {
+  const newPost = async () => {
     const {sport, description} = values;
+    const image = imageInputRef.current?.files;
+
     let validations = {};
 
+    if(!(image || description)){
+      validations.imageDescription = "Obrigatório imagem ou texto";
+    }
     // .toLowerCase().chartAt(0).toUpperCase() depois testa
     if(!sport){
       validations.sport = "Campo obrigatório";
     }
 
     let validSport = sports.filter(item => item.name === sport);
-    if(!validSport[0]._id){
+    if(!validSport.length){
       validations.sport = "Esporte não encontrado";
     }
 
-    if(!description){
-      validations.description = "Campo obrigatório";
-    }
+    console.log(validations);
 
-    validations.sport || validations.description
-    ? setErros(validations)
-    : api.post('/publications', {
+    if(validations.sport || validations.imageDescription){
+      setErros(validations)
+    }
+    else{
+      const formFile = new FormData();
+      formFile.append('file', image[0]);
+
+      const {data} = await api.post('/files', formFile);
+
+      const publication = await api.post('/publications', {
         sport: validSport[0]._id,
-        description
+        description,
+        image: data._id
       })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+      console.log(publication);
+    }
+  }
+
+  const handleImage = () => {
+    const image = imageInputRef.current?.files;
+    const reader = new FileReader();
+
+    if(image[0]){
+      reader.onload = () => {
+        if(reader.readyState === 2){
+          setPublication({
+            preview: reader.result,
+            name: image[0].name,
+            size: image[0].size
+          });
+        }
+      }
+      reader.readAsDataURL(image[0]);
+    }
   }
 
   useEffect(() => {
@@ -95,6 +127,24 @@ export default function PostBox({user}) {
               name = "description"
               onChange = {handleChange}
             />
+            {publication.preview &&
+              <img
+                src = {publication.preview}
+                alt = ""
+                className = "preview"
+              />
+            }
+            <div className = "add-options">
+              <label>
+                <FontAwesomeIcon icon = {faImage} />
+                <input
+                  ref = {imageInputRef}
+                  type = "file"
+                  onChange = {handleImage}
+                  accept = "image/*"
+                />
+              </label>
+            </div>
             <InputButton type = "submit" text = "Publicar"/>
           </FormContainer>
         </div>
