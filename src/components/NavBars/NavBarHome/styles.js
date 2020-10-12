@@ -158,37 +158,63 @@ const Container = styled.div`
     position: fixed;
     background: var(--color-secondary);
 
-    li{
-      display: block;
-      padding: 20px;
-      color: var(--color-white);
-      position: relative;
-      margin-bottom: 1px;
-      white-space: nowrap;
-
-      cursor: pointer;
-      &:hover{
-        background: var(--color-tertiary);
+    ul{
+      @media screen and (max-width: 700px){
+        display: flex;
       }
 
-      &::before{
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 3px;
-        height: 100%;
-        background: var(--color-tertiary);
-      }
+      li{
+        display: block;
+        padding: 20px;
+        color: var(--color-white);
+        position: relative;
+        margin-bottom: 1px;
+        white-space: nowrap;
 
-      .icon{
-        margin-right: ${props => props.visible ? '0px' : '10px'};
-        display: ${props => props.visible ? 'flex' : 'inline-block'};
-        justify-content: ${props => props.visible && 'center'};
-      }
+        cursor: pointer;
+        &:hover{
+          background: var(--color-tertiary);
+        }
 
-      .title{
-        display: ${props => props.visible ? 'none' : 'inline-block'};
+        &::before{
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: var(--color-tertiary);
+
+          @media screen and (min-width: 701px){
+            width: 3px;
+            height: 100%;
+          }
+
+          @media screen and (max-width: 700px){
+            height: 3px;
+            width: 100%;
+          }
+        }
+
+        .icon{
+          margin-right: ${props => props.visible ? '0px' : '10px'};
+          display: ${props => props.visible ? 'flex' : 'inline-block'};
+          justify-content: ${props => props.visible && 'center'};
+
+          @media screen and (max-width: 425px){
+            margin-right: 0;
+          }
+        }
+
+        .title{
+          display: ${props => props.visible ? 'none' : 'inline-block'};
+
+          @media screen and (max-width: 425px){
+            display: none;
+          }
+        }
+
+        @media screen and (max-width: 700px){
+          display: flex;
+        }
       }
     }
 
@@ -203,6 +229,8 @@ const Container = styled.div`
     @media screen and (max-width: 700px){
       bottom: 0;
       width: 100vw;
+
+
     }
   }
 `;
