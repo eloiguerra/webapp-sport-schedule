@@ -29,7 +29,8 @@ export const Header = styled.header`
   border-bottom: 2px solid var(--color-white-two);
 
   margin-bottom: 16px;
-  .profile-photo{
+
+  img{
       width: 100px;
       height: 100px;
       border-radius: 50%;
