@@ -77,5 +77,88 @@ export const FormContainer = styled.form`
 
       margin-right: 8px;
     }
+
+    @media screen and (max-width: 400px){
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .preview{
+    width: 250px;
+    height: 250px;
+  }
+
+  .add-options{
+    width: 90%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid var(--color-gray);
+    border-radius: 8px;
+
+    padding: 8px 0;
+
+    margin-top: 8px;
+    margin-bottom: 16px;
+
+    label{
+      position: relative;
+      display: flex;
+      justify-content: center;
+
+      cursor: pointer;
+
+      transition: all .2s;
+
+      &:hover{
+        background: var(--color-gray);
+
+        border-radius: 50%;
+      }
+
+      padding: 4px 6px;
+
+      svg{
+        width: 20px;
+        height: 20px;
+      }
+
+      &::after{
+        content: "Adicionar imagem";
+
+        position: absolute;
+        bottom: 40px;
+        left: -50px;
+
+        display: none;
+
+        font-size: 1.4rem;
+        color: var(--color-white);
+
+        width: 120px;
+
+        background: var(--color-black);
+
+        border-radius: 500px;
+
+        padding: 4px;
+
+        -webkit-box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.75);
+        box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.75);
+      }
+
+      &:hover::after{
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    input{
+      display: none;
+    }
   }
 `;
