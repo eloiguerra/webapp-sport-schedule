@@ -21,6 +21,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import api from '../../services/api';
+import ProfileTabs from '../../components/ProfileTabs';
 
 export default function Profile() {
   const [{values, loading}, handleChange, handleSubmit] = useForm();
@@ -101,25 +102,26 @@ export default function Profile() {
     <NavBarHome />
     {user.profile_photo &&
       <Container>
-      <Header>
-        <div className = "photo-container">
-          <img
-            onClick = {() => setModalPhotoVisible(true)}
-            className = 'profile-photo'
-            src = {user.profile_photo.url} alt = ""
-          />
-          <button onClick = {() => setModalPhotoVisible(true)}>
-            <FontAwesomeIcon icon = {faCameraRetro}/>
-          </button>
-        </div>
-        <h3>{user.full_name}</h3>
-        {user.description
-          ? <p>{user.description}</p>
-          : <LinkButton onClick = {() => setModalDescriptionVisible(true)}>
-              Adicionar descrição
-            </LinkButton>
-        }
-      </Header>
+        <Header>
+          <div className = "photo-container">
+            <img
+              onClick = {() => setModalPhotoVisible(true)}
+              className = 'profile-photo'
+              src = {user.profile_photo.url} alt = ""
+            />
+            <button onClick = {() => setModalPhotoVisible(true)}>
+              <FontAwesomeIcon icon = {faCameraRetro}/>
+            </button>
+          </div>
+          <h3>{user.full_name}</h3>
+          {user.description
+            ? <p>{user.description}</p>
+            : <LinkButton onClick = {() => setModalDescriptionVisible(true)}>
+                Adicionar descrição
+              </LinkButton>
+          }
+        </Header>
+      <ProfileTabs />
       </Container>
     }
 
@@ -152,7 +154,7 @@ export default function Profile() {
               />
             </div>
             <div className = "input-container">
-              <label className = "image-upload">
+              <label>
                 <FontAwesomeIcon icon = {faImage} />
                 {profilePhoto.name ? profilePhoto.name : 'Adicionar deste dispositivo'}
                 <input
