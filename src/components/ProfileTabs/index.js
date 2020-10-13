@@ -1,12 +1,21 @@
-import React from 'react'
+import React from 'react';
+import {useHistory} from 'react-router-dom';
+
 import {Container, Option, OptionsList} from './styles';
 
-export default function ProfileTabs() {
+export default function ProfileTabs({userId}) {
+  const history = useHistory();
+
   return (
     <Container>
       <OptionsList>
-        <Option className = "active"> Linha do tempo </Option>
-        <Option> Amigos </Option>
+        <Option
+          onClick = {() => history.push(`/users`)}
+          className = "active"
+        > Linha do tempo </Option>
+        <Option
+          onClick = {() => history.push(`/users/friends/${userId}`)}
+        > Amigos </Option>
       </OptionsList>
     </Container>
   )
