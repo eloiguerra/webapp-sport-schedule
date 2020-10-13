@@ -23,7 +23,7 @@ import logo from '../../../assets/images/miniLogo.png';
 
 export default function NavBarHome() {
   const history = useHistory();
-  const [visibleSideBar, setVisibleSideBar] = useState(false);
+  const [visibleSideBar, setVisibleSideBar] = useState(true);
   const [visibleDropdownConfig, setVisibleDropdownConfig] = useState(false);
   const [visibleSearchedUsers, setVisibleSearchedUsers] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState([]);
