@@ -15,7 +15,7 @@ import {
 
 export default function VisitProfile() {
   const {id} = useParams();
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({});
   const [friendData, setFriendData] = useState({});
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function VisitProfile() {
         <h3>Deseja adicionar {userData.full_name} ?</h3>
         {friendData.friend_request ?
           friendData.friend === id ?
-            <Button>
+          <Button>
               Solicitação de amizade pendente
             </Button>
           : <Button onClick = {acceptFriendRequest}>
