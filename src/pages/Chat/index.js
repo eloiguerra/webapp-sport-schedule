@@ -42,15 +42,19 @@ export default function Chat() {
     <Container>
       <ChatWrapper>
         <ChatBox>
-          <div className = "messages">
+          {friend &&
+            <>
+            <div className = "messages">
 
-          </div>
-          <div className = "sender">
-            <textarea />
-            <button type = "button">
-              <img src = {sendButton} alt = "" />
-            </button>
-          </div>
+            </div>
+            <div className = "sender">
+              <textarea />
+              <button type = "button">
+                <img src = {sendButton} alt = "" />
+              </button>
+            </div>
+            </>
+          }
         </ChatBox>
         <Friends>
           <ul>
