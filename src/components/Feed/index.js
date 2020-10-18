@@ -1,43 +1,48 @@
 import React,{useState, useEffect} from 'react';
 
-import {Container} from './styles';
-
 import api from '../../services/api';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+
+import DotLoader from '../Loaders/DotLoader';
+import {
+  Container, PublicationWrapper,
+  Header, Content
+} from './styles';
 
 export default function Feed() {
   const [publications, setPublications] = useState([]);
+  const [paginationIndex, setPaginationIndex] = useState(1);
+  const [loading, setLoading] = useInfiniteScroll(callback);
 
-  window.addEventListener('scroll', () => {
-    const {clientHeight, scrollHeight, scrollTop} = document.documentElement;
-    const isPageBottomAlmostReached = scrollTop + clientHeight >= scrollHeight - 10;
-
-    if(isPageBottomAlmostReached){
-      console.log('calma ae meu camarada tá acabando a página');
-    }
-  })
+  function callback(){
+    setPaginationIndex(paginationIndex + 1);
+    setLoading(false);
+  }
 
   useEffect(() => {
-    api.get('/friendsPublications')
+    api.get(`/friendsPublications?page=${paginationIndex}&limit=${3}`)
     .then(response => {
-      console.log(response);
-      setPublications(response.data);
+      setPublications([...publications, ...response.data]);
     })
-    .catch(err => {
-      console.log(err);
-    })
-  }, [])
-  /* const getPublications = () => {
-    api.get('/friendsPublications')
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  } */
+  }, [paginationIndex])
+
   return (
     <Container>
-
+      {publications.map(item => (
+        <PublicationWrapper key = {item._id}>
+          <Header>
+            <div className = "user-info">
+              <img src = {item.user.profile_photo.url} alt = "" />
+              <p>{item.user.full_name}</p>
+            </div>
+            <p>{item.sport.name}</p>
+          </Header>
+          <Content>
+            {item.description && <p>{item.description}</p>}
+            {item.image && <img src = {item.image.url} alt = "" />}
+          </Content>
+        </PublicationWrapper>
+      ))}
     </Container>
   )
 }
