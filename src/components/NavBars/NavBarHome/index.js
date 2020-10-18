@@ -16,7 +16,8 @@ import {
   faCog,
   faUser,
   faDoorOpen,
-  faHome
+  faHome,
+  faComment
 } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../../../assets/images/miniLogo.png';
@@ -110,6 +111,22 @@ export default function NavBarHome() {
             <span className = "icon">
               <NavLink
                 color = "white"
+                path = "/home"
+                icon = {faHome}
+              />
+            </span>
+            <span className = "title">
+              <NavLink
+                color = "white"
+                path = "/home"
+                text = "Página inicial"
+              />
+            </span>
+          </li>
+          <li>
+          <span className = "icon">
+              <NavLink
+                color = "white"
                 path = "/users"
                 icon = {faUser}
               />
@@ -126,15 +143,15 @@ export default function NavBarHome() {
             <span className = "icon">
               <NavLink
                 color = "white"
-                path = "/home"
-                icon = {faHome}
+                path = "/chat"
+                icon = {faComment}
               />
             </span>
             <span className = "title">
               <NavLink
                 color = "white"
-                path = "/home"
-                text = "Página inicial"
+                path = "/chat"
+                text = "Chat"
               />
             </span>
           </li>
