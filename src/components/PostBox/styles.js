@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 100%;
-  max-width: 400px;
+  width: 95%;
+  max-width: 600px;
   min-width: 300px;
 
   padding: 8px;
@@ -61,7 +61,6 @@ export const FormContainer = styled.form`
       display: flex;
       align-items: center;
 
-      font-size: 1.6rem;
       font-weight: 700;
 
       img{
