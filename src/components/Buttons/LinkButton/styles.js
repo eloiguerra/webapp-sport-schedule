@@ -5,8 +5,7 @@ export const Button = styled.button`
   outline: none;
 
   color: var(--color-secondary);
-
-  background: var(--color-white);
+  background: transparent;
 
   cursor: pointer;
   &:hover{
