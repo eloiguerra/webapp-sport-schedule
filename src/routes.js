@@ -6,9 +6,10 @@ import Index from './pages/Index';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import Chat from './pages/Chat';
 import Profile from './pages/Profile';
 import VisitProfile from './pages/VisitProfile';
-import Friends from './pages/Friends';
+// import Friends from './pages/Friends';
 
 export default function routes() {
   const PrivateRoute = ({component: Component, ...rest}) => {
@@ -27,9 +28,10 @@ export default function routes() {
       <Route path = "/login" component = {Login} />
       <Route path = "/register" component = {Register} />
       <PrivateRoute path = "/home" component = {Home} />
+      <PrivateRoute path = "/chat" component = {Chat} />
       <PrivateRoute path = "/users" component = {Profile} exact />
       <PrivateRoute path = "/users/:id" component = {VisitProfile} exact />
-      <PrivateRoute path = "/users/friends/:id" component = {Friends} />
+      {/* <PrivateRoute path = "/users/friends/:id" component = {Friends} /> */}
     </Switch>
   )
 }
