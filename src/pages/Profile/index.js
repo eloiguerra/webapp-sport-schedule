@@ -11,17 +11,13 @@ export default function Profile() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const getUser = () => {
-      api.get('/users')
-      .then(response => {
-        setUser(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    }
-
-    getUser();
+    api.get('/users')
+    .then(response => {
+      setUser(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }, []);
 
   return (
