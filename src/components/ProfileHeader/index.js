@@ -74,10 +74,6 @@ export default function ProfileHeader({user}) {
     })
   }
 
-  // useEffect(() => {
-
-  // }, [userData, user]);
-
   return (
     <>
     <Header>
