@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Container, {CloseButton, Content} from './styles';
 
 export default function Modal({children, id = "modal", onClose = () => {}}) {
   const avoidModal = e => e.target.id === id && onClose();
-  window.addEventListener('keydown', e => e.key === "Escape" && onClose());
+
+  useEffect(() => {
+    const isEscPressed = e => e.key === "Escape" && onClose();
+
+    window.addEventListener('keydown', isEscPressed);
+    return () => window.removeEventListener('keydown', isEscPressed);
+  }, [onClose]);
 
   return (
     <Container
