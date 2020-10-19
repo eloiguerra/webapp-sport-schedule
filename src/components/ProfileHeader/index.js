@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
 import api from '../../services/api';
 import useForm from '../../hooks/useForm';
@@ -14,7 +14,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCameraRetro, faImage} from '@fortawesome/free-solid-svg-icons';
 
 export default function ProfileHeader({user}) {
-  const [{values, loading}, handleChange, handleSubmit] = useForm();
+  const [userData, setUserData] = useState(user);
+  const [{values}, handleChange, handleSubmit] = useForm();
   const [modalDescriptionVisible, setModalDescriptionVisible] = useState(false);
   const [modalPhotoVisible, setModalPhotoVisible] = useState(false);
 
@@ -48,11 +49,13 @@ export default function ProfileHeader({user}) {
 
   const formPhoto = () => {
     const profilePhotoData = profilePhotoInputRef.current?.files;
-    const data = new FormData()
+    const data = new FormData();
     data.append('file', profilePhotoData[0])
-    api.put('/files', data)
+
+    api.put('/changeProfilePhoto', data)
     .then(response => {
-      console.log(response);
+      setUserData({...userData, profile_photo: response.data});
+      setModalPhotoVisible(false);
     })
     .catch(err => {
       console.log(err);
@@ -71,6 +74,10 @@ export default function ProfileHeader({user}) {
     })
   }
 
+  // useEffect(() => {
+
+  // }, [userData, user]);
+
   return (
     <>
     <Header>
@@ -78,15 +85,15 @@ export default function ProfileHeader({user}) {
         <img
           onClick = {() => setModalPhotoVisible(true)}
           className = 'profile-photo'
-          src = {user.profile_photo.url} alt = ""
+          src = {userData.profile_photo.url} alt = ""
         />
         <button onClick = {() => setModalPhotoVisible(true)}>
           <FontAwesomeIcon icon = {faCameraRetro}/>
         </button>
       </div>
-      <h3>{user.full_name}</h3>
-      {user.description
-        ? <p>{user.description}</p>
+      <h3>{userData.full_name}</h3>
+      {userData.description
+        ? <p>{userData.description}</p>
         : <LinkButton onClick = {() => setModalDescriptionVisible(true)}>
             Adicionar descrição
           </LinkButton>
@@ -117,7 +124,7 @@ export default function ProfileHeader({user}) {
           <FormPhoto onSubmit = {handleSubmit(formPhoto)}>
             <div className = "image-container">
               <img
-                src = {profilePhoto.preview ? profilePhoto.preview : user.profile_photo.url}
+                src = {profilePhoto.preview ? profilePhoto.preview : userData.profile_photo.url}
                 alt = ""
               />
             </div>
