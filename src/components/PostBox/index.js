@@ -29,7 +29,7 @@ export default function PostBox({user}) {
 
     let validations = {};
 
-    if(!(image || description)){
+    if(!(image[0] || description)){
       validations.imageDescription = "Obrigatório imagem ou texto";
     }
     // .toLowerCase().chartAt(0).toUpperCase() depois testa
@@ -43,22 +43,42 @@ export default function PostBox({user}) {
     }
 
     console.log(validations);
+    console.log(description);
 
     if(validations.sport || validations.imageDescription){
       setErros(validations)
     }
     else{
-      const formFile = new FormData();
-      formFile.append('file', image[0]);
+      if(image[0] && !description){
+        const formFile = new FormData();
+        formFile.append('file', image[0]);
 
-      const {data} = await api.post('/files', formFile);
+        const {data} = await api.post('/files', formFile);
 
-      const publication = await api.post('/publications', {
-        sport: validSport[0]._id,
-        description,
-        image: data._id
-      })
-      console.log(publication);
+        await api.post('/publications', {
+          sport: validSport[0]._id,
+          description: null,
+          image: data._id
+        })
+      }
+      else if(description && !image[0]){
+        await api.post('/publications', {
+          sport: validSport[0]._id,
+          description,
+          image: null
+        })
+      }
+      else{
+        const formFile = new FormData();
+        formFile.append('file', image[0]);
+        const {data} = await api.post('/files', formFile);
+
+        await api.post('/publications', {
+          sport: validSport[0]._id,
+          description,
+          image: data._id
+        })
+      }
     }
   }
 
