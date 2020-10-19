@@ -42,6 +42,13 @@ export const Header = styled.header`
       }
     }
   }
+
+  .description{
+    svg{
+      margin-left: 8px;
+      cursor: pointer;
+    }
+  }
 `;
 
 export const FormDescription = styled.form`

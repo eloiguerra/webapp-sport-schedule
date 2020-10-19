@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 
 import api from '../../services/api';
 import useForm from '../../hooks/useForm';
@@ -11,7 +11,9 @@ import DragDropBox from '../../components/DragDropBox';
 import InputButton from '../../components/Buttons/InputButton';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCameraRetro, faImage} from '@fortawesome/free-solid-svg-icons';
+import {
+  faCameraRetro, faImage, faEdit
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function ProfileHeader({user}) {
   const [userData, setUserData] = useState(user);
@@ -61,14 +63,14 @@ export default function ProfileHeader({user}) {
       console.log(err);
     })
   }
-
   const formDescription = () => {
     const {description} = values;
 
     api.put('/users', {
       description
     }).then(response => {
-      console.log(response);
+      setUserData({...userData, description})
+      setModalDescriptionVisible(false);
     }).catch(err => {
       console.log(err);
     })
@@ -89,7 +91,10 @@ export default function ProfileHeader({user}) {
       </div>
       <h3>{userData.full_name}</h3>
       {userData.description
-        ? <p>{userData.description}</p>
+        ? <p className = "description">
+            {userData.description}
+            <FontAwesomeIcon icon = {faEdit} onClick = {setModalDescriptionVisible} />
+          </p>
         : <LinkButton onClick = {() => setModalDescriptionVisible(true)}>
             Adicionar descrição
           </LinkButton>
