@@ -79,6 +79,7 @@ export default function PostBox({user}) {
           image: data._id
         })
       }
+      setModalPostVisible(false);
     }
   }
 
