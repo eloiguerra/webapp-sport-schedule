@@ -9,7 +9,6 @@ import {
 import useForm from '../../hooks/useForm';
 
 import api from '../../services/api';
-import {login} from '../../utils/auth';
 
 import NavLink from '../../components/NavLink';
 import InputBlock from '../../components/InputBlock';
@@ -22,7 +21,7 @@ export default function Register(props) {
   const callback = async () => {
     const {full_name, email, password, date_of_birth} = values;
     let validations = {};
-    let regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let regexEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
     if(!full_name){
       validations.full_name = 'Campo obrigatório';
