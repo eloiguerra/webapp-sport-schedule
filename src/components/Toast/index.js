@@ -10,6 +10,7 @@ import {
 
 export default function Toast({type, title, message}) {
   const [toastProperties, setToastProperties] = useState({type, title, message});
+
   useEffect(() => {
     switch (type) {
       case 'error':
@@ -58,7 +59,7 @@ export default function Toast({type, title, message}) {
             <p className = "notification-message">{toastProperties.message}</p>
           </div>
         </NotificationToast>
-    </NotificationContainer>
+      </NotificationContainer>
     }
     </>
   )
