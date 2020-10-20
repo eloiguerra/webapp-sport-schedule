@@ -21,7 +21,7 @@ export const ContainerInputButton = styled.div`
 
     transition: .4s all;
 
-    &:hover{
+    &:hover, &:focus{
       cursor: pointer;
       border-radius: 50px;
       border: none;
