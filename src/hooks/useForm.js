@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const useForm = () => {
-  const [values, setValues] = useState({ });
+  const [values, setValues] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleChange = event => {
