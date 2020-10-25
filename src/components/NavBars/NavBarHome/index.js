@@ -16,7 +16,8 @@ import {
   faUser,
   faDoorOpen,
   faHome,
-  faComment
+  faComment,
+  faMapMarkedAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../../../assets/images/miniLogo.png';
@@ -135,6 +136,22 @@ export default function NavBarHome() {
                 color = "white"
                 path = "/users"
                 text = "Meu perfil"
+              />
+            </span>
+          </li>
+          <li>
+            <span className = "icon">
+              <NavLink
+                color = "white"
+                path = "/games"
+                icon = {faMapMarkedAlt}
+              />
+            </span>
+            <span className = "title">
+              <NavLink
+                color = "white"
+                path = "/games"
+                text = "Torneios"
               />
             </span>
           </li>
