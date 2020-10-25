@@ -149,9 +149,6 @@ const Container = styled.div`
         }
       }
     }
-    /*@media screen and (max-width: 701px){
-      display: none;
-    }*/
   }
 
   .sidebar{
@@ -229,8 +226,6 @@ const Container = styled.div`
     @media screen and (max-width: 700px){
       bottom: 0;
       width: 100vw;
-
-
     }
   }
 `;

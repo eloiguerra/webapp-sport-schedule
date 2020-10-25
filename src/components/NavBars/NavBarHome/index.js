@@ -6,7 +6,6 @@ import {logout} from '../../../utils/auth';
 import api from '../../../services/api';
 
 import Container, {Hamburguer} from './styles';
-
 import NavLink from '../../NavLink';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

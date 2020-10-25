@@ -34,7 +34,7 @@ export default function Home() {
             }}
           />
         }
-        <Feed />
+        <Feed user = {user}/>
       </Container>
     </>
   )
