@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Chat from './pages/Chat';
 import Profile from './pages/Profile';
 import VisitProfile from './pages/VisitProfile';
+import Games from './pages/Games';
 // import Friends from './pages/Friends';
 
 export default function routes() {
@@ -28,6 +29,7 @@ export default function routes() {
       <Route path = "/login" component = {Login} />
       <Route path = "/register" component = {Register} />
       <PrivateRoute path = "/home" component = {Home} />
+      <PrivateRoute path = "/games" component = {Games} />
       <PrivateRoute path = "/chat" component = {Chat} />
       <PrivateRoute path = "/users" component = {Profile} exact />
       <PrivateRoute path = "/users/:id" component = {VisitProfile} exact />
