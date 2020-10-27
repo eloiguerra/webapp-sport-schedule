@@ -43,9 +43,6 @@ export const Content = styled.div`
 
   .head{
     padding: 16px;
-
-    border-bottom: 1px solid;
-    border-color: var(--color-white-gray);
   }
 
   .body{
