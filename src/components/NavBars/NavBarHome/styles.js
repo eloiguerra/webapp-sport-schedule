@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  z-index: 99999;
+  z-index: 1;
 
   .top-navbar{
     width: 100vw;
@@ -154,6 +154,8 @@ const Container = styled.div`
   .sidebar{
     position: fixed;
     background: var(--color-secondary);
+
+    z-index: 1;
 
     ul{
       @media screen and (max-width: 700px){
