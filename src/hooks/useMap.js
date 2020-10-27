@@ -9,7 +9,7 @@ const useMap = () => {
 
     setCurrentCordinates({
       lat: coords.latitude,
-      long: coords.longitude
+      lng: coords.longitude
     })
 
     return;
