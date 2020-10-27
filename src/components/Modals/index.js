@@ -15,7 +15,6 @@ export default function Modal({children, id = "modal", onClose = () => {}}) {
     <Container
       id = {id}
       onClick = {e => avoidModal(e)}
-      onKeyDown = {e => e.key === "Escape" && onClose()}
     >
       <Content>
         <CloseButton onClick = {onClose}> x </CloseButton>
