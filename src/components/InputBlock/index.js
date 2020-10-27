@@ -6,7 +6,9 @@ export default function InputBlock({inputType, name, id, placeholder, icon, onCh
   return (
     <>
     <InputContainer>
-      <label htmlFor = {id}> <FontAwesomeIcon icon = {icon}/> </label>
+      <label htmlFor = {id}>
+        {icon && <FontAwesomeIcon icon = {icon}/>}
+      </label>
       <input
         type = {inputType}
         name = {name}
