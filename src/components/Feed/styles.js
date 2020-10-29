@@ -5,6 +5,14 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+
+  @media screen and (max-width: 700px){
+    margin-bottom: 70px;
+  }
+
+  @media screen and (min-width: 701px){
+    margin-bottom: 16px;
+  }
 `;
 
 export const PublicationWrapper = styled.div`
@@ -23,10 +31,6 @@ export const PublicationWrapper = styled.div`
   -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-
-  @media screen and (max-width: 700px){
-    margin-bottom: 70px;
-  }
 `;
 
 export const Header = styled.div`
