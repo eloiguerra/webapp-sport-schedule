@@ -12,6 +12,11 @@ export const SelectBox = styled.div`
 `;
 
 export const OptionsContainer = styled.div`
+  position: absolute;
+  top: 54px;
+
+  z-index: 1;
+
   display: ${props => props.options ? 'flex' : 'none'};
   flex-direction: column;
 
@@ -61,6 +66,7 @@ export const Option = styled.div`
 
 export const SearchBox = styled.div`
   position: sticky;
+  top: 0;
 
   width: 100%;
   padding: 12px 16px;
@@ -79,7 +85,6 @@ export const SelectedContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  margin-bottom: 8px;
   padding: 12px 24px;
 
   background: var(--color-gray-light);
