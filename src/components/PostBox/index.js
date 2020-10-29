@@ -13,6 +13,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faImage
 } from '@fortawesome/free-solid-svg-icons';
+import SelectSearch from '../SelectSearch';
 
 export default function PostBox({user}) {
   const imageInputRef = useRef(null);
@@ -37,13 +38,12 @@ export default function PostBox({user}) {
       validations.sport = "Campo obrigatório";
     }
 
-    let validSport = sports.filter(item => item.name === sport);
-    if(!validSport.length){
-      validations.sport = "Esporte não encontrado";
-    }
+    // let validSport = sports.filter(item => item.name === sport);
+    // if(!validSport.length){
+    //   validations.sport = "Esporte não encontrado";
+    // }
 
     console.log(validations);
-    console.log(description);
 
     if(validations.sport || validations.imageDescription){
       setErros(validations)
@@ -56,14 +56,14 @@ export default function PostBox({user}) {
         const {data} = await api.post('/files', formFile);
 
         await api.post('/publications', {
-          sport: validSport[0]._id,
+          sport,
           description: null,
           image: data._id
         })
       }
       else if(description && !image[0]){
         await api.post('/publications', {
-          sport: validSport[0]._id,
+          sport,
           description,
           image: null
         })
@@ -74,7 +74,7 @@ export default function PostBox({user}) {
         const {data} = await api.post('/files', formFile);
 
         await api.post('/publications', {
-          sport: validSport[0]._id,
+          sport,
           description,
           image: data._id
         })
@@ -130,23 +130,18 @@ export default function PostBox({user}) {
                 <img src = {user.profile_photo} alt = "" />
                 {user.name}
               </div>
-              <input
-                type = "text"
-                list = "sport-list"
-                placeholder = "Esporte"
-                name = "sport"
-                autoComplete = "off"
-                onChange = {handleChange}
-              />
-              <datalist id = "sport-list">
-                {sports.map(sport => (
-                  <option key = {sport._id} value = {sport.name} />
-                ))}
-              </datalist>
+              <div className = "select-search">
+                <SelectSearch
+                  data = {sports}
+                  name = "sport"
+                  change = {handleChange}
+                />
+              </div>
             </header>
             <Textarea
               name = "description"
               onChange = {handleChange}
+              placeholder = "Diga amigo, diga imediatamente"
             />
             {publication.preview &&
               <img
