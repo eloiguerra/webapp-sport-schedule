@@ -1,26 +1,27 @@
 import React, {useState} from 'react';
 import Container from './styles';
 
-export default function Textarea({id = "textarea", label = "", name, onChange}) {
-  const [char, setChar] = useState(100);
+export default function Textarea(props) {
+  const [char, setChar] = useState(props.maxLength);
 
-  const remainChar = (remainChar) => setChar(100 - remainChar);
+  const remainChar = (remainChar) => setChar(props.maxLength - remainChar);
   const changeActions = (e) => {
-    remainChar(e.target.value.length);
-    onChange(e);
+    props.maxLength && remainChar(e.target.value.length);
+    props.onChange(e);
   }
 
   return (
     <Container>
-      <label htmlFor = {id}> {label} </label>
+      <label htmlFor = {props.id}> {props.label} </label>
       <textarea
-        id = {id}
-        name = {name}
-        maxLength = "100"
+        id = {props.id}
+        name = {props.name}
+        maxLength = {props.maxLength ? props.maxLength : ""}
+        placeholder = {props.placeholder ? props.placeholder : ""}
         onChange = {(e) => changeActions(e)}
       >
       </textarea>
-      <p>caracteres restantes: {char}</p>
+      {props.maxLength && <p>caracteres restantes: {char}</p>}
     </Container>
   )
 }
