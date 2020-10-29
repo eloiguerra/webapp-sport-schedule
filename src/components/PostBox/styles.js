@@ -56,10 +56,10 @@ export const FormContainer = styled.form`
     width: 100%;
 
     .user-info{
-      margin-left: 8px;
-
       display: flex;
       align-items: center;
+
+      margin-left: 8px;
 
       font-weight: 700;
 
@@ -69,11 +69,14 @@ export const FormContainer = styled.form`
         border-radius: 50%;
         margin-right: 8px;
       }
+
+      @media screen and (max-width: 400px){
+        justify-content: center;
+        margin: 0 0 8px 8px;
+      }
     }
 
-    input{
-      padding: 8px;
-
+    .select-search{
       margin-right: 8px;
     }
 
