@@ -5,14 +5,13 @@ import {
   SelectedContainer
 } from './styles';
 
-export default function SelectSearch({data, change}) {
+export default function SelectSearch({data, change, name}){
   const [values, setValues] = useState(data);
   const [toggleOptions, setToggleOptions] = useState(false);
   const [selected, setSelected] = useState(null);
 
   const findInSelect = e => {
     const name = e.target.value;
-    console.log(name);
 
     if(name !== ''){
       setValues(prevValues =>
@@ -56,8 +55,8 @@ export default function SelectSearch({data, change}) {
               <input
                 type = "radio"
                 id = {item._id}
-                name = "data"
-                value = {item.name}
+                name = {name}
+                value = {item._id}
                 onChange = {change}
               />
               <label htmlFor = {item._id}> {item.name} </label>
