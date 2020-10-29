@@ -2,7 +2,12 @@ import {useState} from 'react';
 
 const useMap = () => {
   const [mapError, setMapError] = useState('');
-  const [currentCordinates, setCurrentCordinates] = useState('blz');
+  const [currentCordinates, setCurrentCordinates] = useState(
+    {
+      lat: -23.5489,
+      lng: -46.6388
+    }
+  );
 
   const success = (position) => {
     const {coords} = position;
