@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const useInfiniteScroll = callback => {
-  const [loading, setLoading] = useState(false);
+  const [loadingScroll, setLoadingScroll] = useState(false);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -9,20 +9,20 @@ const useInfiniteScroll = callback => {
   }, []);
 
   useEffect(() => {
-    if (!loading) return;
+    if (!loadingScroll) return;
     callback();
-  }, [loading, callback]);
+  }, [loadingScroll, callback]);
 
   const handleScroll = () => {
     const {clientHeight, scrollHeight, scrollTop} = document.documentElement;
     const isPageBottomAlmostReached = scrollTop + clientHeight >= scrollHeight - 10;
 
     if(isPageBottomAlmostReached){
-      setLoading(true);
+      setLoadingScroll(true);
     }
   }
 
-  return [loading, setLoading];
+  return [loadingScroll, setLoadingScroll];
 };
 
 export default useInfiniteScroll;
