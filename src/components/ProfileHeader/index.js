@@ -63,6 +63,7 @@ export default function ProfileHeader({user}) {
       console.log(err);
     })
   }
+
   const formDescription = () => {
     const {description} = values;
 
@@ -110,6 +111,7 @@ export default function ProfileHeader({user}) {
               id = "textarea-description"
               label = "Descrição"
               name = "description"
+              maxLength = "100"
               onChange = {handleChange}
             />
             <button type = "submit">Criar</button>
