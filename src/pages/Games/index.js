@@ -3,10 +3,13 @@ import React, {useState, useCallback, useRef, useEffect} from 'react';
 import NavBarHome from '../../components/NavBars/NavBarHome';
 import Modal from '../../components/Modals';
 import InputBlock from '../../components/InputBlock';
-import {Container, FormGame, MapContainer} from './styles';
 import SelectSearch from '../../components/SelectSearch';
+import TextArea from '../../components/Textarea';
+import {Container, FormGame, MapContainer} from './styles';
 
 import {faTrophy} from '@fortawesome/free-solid-svg-icons';
+
+import moment from 'moment';
 
 import {
   GoogleMap,
@@ -27,6 +30,10 @@ const containerStyle = {
 };
 
 export default function Games() {
+  moment.locale('pt', {
+    months : ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+  });
+
   const {isLoaded} = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -55,7 +62,18 @@ export default function Games() {
     .catch(response => {
       console.log(response);
     })
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    api.get('/games')
+    .then(response => {
+      setMarkers(response.data);
+      console.log(response);
+    })
+    .catch(response => {
+      console.log(response);
+    })
+  }, []);
 
   const onMapClick = useCallback(event => {
     setMarkers(prevMarkers => [
@@ -63,7 +81,6 @@ export default function Games() {
       {
         lat: event.latLng.lat(),
         lng: event.latLng.lng(),
-        time: new Date()
     }]);
     setModalGame(true);
   }, []);
@@ -74,7 +91,22 @@ export default function Games() {
   }
 
   const newGame = () => {
-    console.log(values);
+    const {name, date, sport, description} = values;
+    const {lat, lng} = markers[markers.length-1];
+    api.post('/games', {
+      name,
+      description,
+      date,
+      lat,
+      lng,
+      sport
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   const mapRef = useRef();
@@ -101,7 +133,7 @@ export default function Games() {
                 onClick = {onMapClick}
               >
                 {markers.map(marker =>
-                  <Marker key = {marker.time.toISOString()}
+                  <Marker key = {marker._id}
                     position = {{lat: marker.lat, lng: marker.lng}}
                     onClick = {() => setSelected(marker)}
                   />
@@ -115,8 +147,11 @@ export default function Games() {
                   }}
                 >
                   <div>
-                    <h2>Banana fear</h2>
-                    <p>King crimson meu caro</p>
+                    <h2>{selected.name}</h2>
+                    <p>{selected.description}</p>
+                    <small>
+                      {moment(selected.date).format('DD [de] MMMM [de] YYYY')}
+                    </small>
                   </div>
                 </InfoWindow> : null}
               </GoogleMap>
@@ -141,12 +176,17 @@ export default function Games() {
               <SelectSearch
                 data = {sports}
                 change = {handleChange}
+                name = "sport"
               />
                <InputBlock
                 inputType = "date"
                 name = "date"
-                placeholder = "Nome do evento"
                 onChange = {handleChange}
+              />
+              <TextArea
+                name = "description"
+                onChange = {handleChange}
+                placeholder = "Descrição do evento"
               />
               <button type = "submit">Enviar</button>
             </FormGame>
