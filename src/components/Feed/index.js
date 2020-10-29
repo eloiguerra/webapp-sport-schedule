@@ -20,12 +20,12 @@ import sendButton from '../../assets/images/send-button.svg';
 export default function Feed({user}) {
   const [publications, setPublications] = useState([]);
   const [paginationIndex, setPaginationIndex] = useState(1);
-  const [loading, setLoading] = useInfiniteScroll(callback);
+  const [loadingScroll, setLoadingScroll] = useInfiniteScroll(callback);
   const [{values}, handleChange, handleSubmit] = useForm();
 
   function callback(){
     setPaginationIndex(paginationIndex + 1);
-    setLoading(false);
+    setLoadingScroll(false);
   }
 
   const handleCommentSubmit = e => {
@@ -122,6 +122,7 @@ export default function Feed({user}) {
           </Comments>
         </PublicationWrapper>
       ))}
+      {loadingScroll && <DotLoader />}
     </Container>
   )
 }
