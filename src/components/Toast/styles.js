@@ -26,7 +26,11 @@ export const NotificationContainer = styled.div`
 export const NotificationToast = styled.div`
   position: relative;
 
-  background: ${props => props.type};
+  background: ${props => props.type === 'success'
+    ? 'var(--color-success)'
+    : 'var(--color-error)'
+  };
+
   transition: .3s ease;
 
   width: 300px;
