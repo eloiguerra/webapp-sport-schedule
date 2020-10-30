@@ -22,7 +22,7 @@ export default function Login(props) {
   const [{values}, handleChange, handleSubmit] = useForm();
 
   const [errors, setErrors] = useState([]);
-  const [toast, setToast] = useState({});
+  const [toast, setToast] = useState([]);
 
   const loginValidation = () => {
     const {email, password} = values;
