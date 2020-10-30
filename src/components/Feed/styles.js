@@ -85,7 +85,7 @@ export const ToolBar = styled.div`
   border-top: 1px solid var(--color-gray);
   border-bottom: 1px solid var(--color-gray);
 
-  button{
+  button, label{
     border: none;
     outline: none;
 
@@ -95,6 +95,8 @@ export const ToolBar = styled.div`
 
     transition: all .3s;
     cursor: pointer;
+
+    font-size: 1.6rem;
 
     &:hover{
       background: var(--color-primary);
@@ -124,6 +126,20 @@ export const ToolBar = styled.div`
       background: var(--color-white-two);
       width: 200px;
     }
+  }
+`;
+
+export const HudBar = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .likes{
+
+  }
+
+  .comments{
+
   }
 `;
 
