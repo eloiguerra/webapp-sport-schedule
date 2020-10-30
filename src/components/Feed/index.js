@@ -4,28 +4,57 @@ import api from '../../services/api';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import useForm from '../../hooks/useForm';
 
+import Toast from '../../components/Toast';
 import DotLoader from '../Loaders/DotLoader';
+import CircleLoader from '../Loaders/CircleLoader';
 import {
   Container, PublicationWrapper,
   Header, Content,
-  ToolBar, Comments
+  ToolBar, Comments, HudBar
 } from './styles';
+
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faThumbsUp,
   faCommentAlt
 } from '@fortawesome/free-solid-svg-icons';
+
 import sendButton from '../../assets/images/send-button.svg';
 
 export default function Feed({user}) {
   const [publications, setPublications] = useState([]);
+  const [toast, setToast] = useState({});
   const [paginationIndex, setPaginationIndex] = useState(1);
+  const [loadPage, setLoadPage] = useState(false);
+
   const [loadingScroll, setLoadingScroll] = useInfiniteScroll(callback);
-  const [{values}, handleChange, handleSubmit] = useForm();
+  const [{values}, handleChange] = useForm();
 
   function callback(){
     setPaginationIndex(paginationIndex + 1);
+    //Lembrar de arrumar sa porra que
     setLoadingScroll(false);
+  }
+
+  const handleLikeSubmit = publication => {
+    api.post('/publications/likes', {
+      publication
+    })
+    .then(response => {
+      const newLike = publications.map(item => {
+        if(item._id === publication){
+          return response.data;
+        }
+        else{
+          return item;
+        }
+      });
+
+      setPublications(newLike);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   const handleCommentSubmit = e => {
@@ -50,22 +79,36 @@ export default function Feed({user}) {
         });
 
         setPublications(newComment);
+        setToast({
+          type: 'success',
+          title: 'Comentado!',
+          message: 'Comentário feito com sucesso',
+          visible: true
+        });
       })
       .catch(err => {
-        console.log(err);
+        setToast({
+          type: 'error',
+          title: 'Error',
+          message: err,
+          visible: true
+        });
       })
     }
   }
 
   useEffect(() => {
+    if(paginationIndex === 1) setLoadPage(true);
     api.get(`/friendsPublications?page=${paginationIndex}&limit=${3}`)
     .then(response => {
       setPublications([...publications, ...response.data]);
+      setLoadPage(false);
     })
   }, [paginationIndex])
 
   return (
     <Container>
+      {loadPage && <CircleLoader />}
       {publications.map(item => (
         <PublicationWrapper key = {item._id}>
           <Header>
@@ -79,18 +122,37 @@ export default function Feed({user}) {
             {item.description && <p>{item.description}</p>}
             {item.image && <img src = {item.image.url} alt = "" />}
           </Content>
+          {item.likes.length || item.comments.length ?
+            <HudBar>
+              <small className = "likes">
+                <FontAwesomeIcon icon = {faThumbsUp} />
+                {item.likes.length}
+              </small>
+              <small className = "comments">
+              {item.comments.length === 1
+                ? `${item.comments.length} comentário`
+                : `${item.comments.length} comentários`
+              }
+                {item.comments.length} comentários
+              </small>
+            </HudBar>
+            : null
+          }
+
           <ToolBar>
             <div className = "container-reactions">
-              <button className = "toggle-reactions">
+              <button
+                className = "toggle-reactions"
+                onClick = {() => handleLikeSubmit(item._id)}
+              >
                 <FontAwesomeIcon icon = {faThumbsUp} />
                 Curtir
               </button>
-              <div className = "reactions"> </div>
             </div>
-            <button>
+            <label htmlFor = {`textarea-${item._id}`}>
               <FontAwesomeIcon icon = {faCommentAlt}/>
               Comentar
-            </button>
+            </label>
           </ToolBar>
           <Comments>
             <form
@@ -100,6 +162,7 @@ export default function Feed({user}) {
             >
               <img src = {user.profile_photo.url} alt = "" />
               <textarea
+                id = {`textarea-${item._id}`}
                 name = "comment"
                 placeholder = "Comentar..."
                 onChange = {handleChange}
@@ -123,6 +186,13 @@ export default function Feed({user}) {
         </PublicationWrapper>
       ))}
       {loadingScroll && <DotLoader />}
+      {toast.visible &&
+        <Toast
+          type = {toast.type}
+          title = {toast.title}
+          message = {toast.message}
+        />
+      }
     </Container>
   )
 }
