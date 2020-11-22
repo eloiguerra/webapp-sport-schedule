@@ -8,7 +8,7 @@ export const Header = styled.header`
 
   .photo-container{
     position: relative;
-    /* z-index problema amigo */
+
     .profile-photo{
       width: 100px;
       height: 100px;
@@ -99,8 +99,7 @@ export const FormPhoto = styled.form`
       @media screen and (min-width: 701px){
         width: 250px;
         height: 250px;
-        /* padding-right: 8px; */
-        /* border-right: 2px solid var(--color-black); */
+
         margin-right: 8px;
       }
     }

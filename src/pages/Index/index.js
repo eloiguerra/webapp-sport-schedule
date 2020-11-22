@@ -24,10 +24,10 @@ const center = {
 };
 
 export default function Index() {
-  const {isLoaded} = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
-  })
+  // const {isLoaded} = useLoadScript({
+  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  //   libraries,
+  // })
 
   return (
     <>
@@ -42,7 +42,7 @@ export default function Index() {
           </p>
         </div>
       </Introduction>
-      {isLoaded && (
+      {/* {isLoaded && (
         <ViewAroundMap>
           <GoogleMap
             mapContainerStyle={containerStyle}
@@ -52,7 +52,7 @@ export default function Index() {
 
           </GoogleMap>
         </ViewAroundMap>
-      )}
+      )} */}
     </>
   )
 }

@@ -33,7 +33,6 @@ export default function routes() {
       <PrivateRoute path = "/chat" component = {Chat} />
       <PrivateRoute path = "/users" component = {Profile} exact />
       <PrivateRoute path = "/users/:id" component = {VisitProfile} exact />
-      {/* <PrivateRoute path = "/users/friends/:id" component = {Friends} /> */}
     </Switch>
   )
 }

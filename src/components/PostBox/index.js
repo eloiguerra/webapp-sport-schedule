@@ -131,11 +131,13 @@ export default function PostBox({user}) {
                 {user.name}
               </div>
               <div className = "select-search">
-                <SelectSearch
-                  data = {sports}
-                  name = "sport"
-                  change = {handleChange}
-                />
+                { sports &&
+                  <SelectSearch
+                    data = {sports}
+                    name = "sport"
+                    change = {handleChange}
+                  />
+                }
               </div>
             </header>
             <Textarea

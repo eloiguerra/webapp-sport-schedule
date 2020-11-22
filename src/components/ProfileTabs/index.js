@@ -1,22 +1,75 @@
-import React from 'react';
-import {useHistory} from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
 
-import {Container, Option, OptionsList} from './styles';
+import {
+  Container, Option, OptionsList,
+  ContainerPublications, ContainerFriends,
+  FriendCard,
+  ContainerFriendsCard
+} from './styles';
+import Feed from '../Feed';
+import api from '../../services/api';
+import NavLink from '../NavLink';
 
-export default function ProfileTabs({userId}) {
-  const history = useHistory();
+export default function ProfileTabs({user}) {
+  const [friends, setFriends] = useState([]);
+  const [togglePublicationsTab, setTogglePublicationsTab] = useState(true);
+  const [toggleFriendsTab, setToggleFriendTab] = useState(false);
+
+  const displayPublicationsTab = () => {
+    setTogglePublicationsTab(true);
+    setToggleFriendTab(false);
+  }
+
+  const displayFriendTab = () => {
+    setToggleFriendTab(true);
+    setTogglePublicationsTab(false);
+  }
+
+  useEffect(() => {
+    api.get('/friends')
+    .then(response => {
+      setFriends(response.data);
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }, [])
 
   return (
     <Container>
       <OptionsList>
         <Option
-          onClick = {() => history.push(`/users`)}
+          onClick = {displayPublicationsTab}
           className = "active"
         > Linha do tempo </Option>
         <Option
-          onClick = {() => history.push(`/users/friends/${userId}`)}
+          onClick = {displayFriendTab}
         > Amigos </Option>
       </OptionsList>
+      {togglePublicationsTab &&
+         <ContainerPublications>
+           <Feed user = {user} by = 'owner' />
+         </ContainerPublications>
+      }
+      {toggleFriendsTab &&
+        <ContainerFriends>
+          <h2>Amizades</h2>
+          <ContainerFriendsCard>
+            {
+              friends.map(friend => (
+                <FriendCard key = {friend._id}>
+                  <img src = {friend.profile_photo.url} alt = "" />
+                  <NavLink
+                    text = {friend.full_name}
+                    path = {`/users/${friend._id}`}
+                  />
+                </FriendCard>
+              ))
+            }
+          </ContainerFriendsCard>
+        </ContainerFriends>
+      }
     </Container>
   )
 }

@@ -21,7 +21,7 @@ export const ChatWrapper = styled.div`
   grid-template-rows: calc(100vh - 60px);
   grid-template-columns: 2fr 1fr;
   grid-template-areas:
-  'chatbox friends'
+    'chatbox friends'
   ;
 `;
 

@@ -31,6 +31,6 @@ body{
   background: var(--color-white-two);
 }
 
-body, input button, textarea{
-  font: 500 1.8rem Lora;
+body, input, button, textarea{
+  font: 500 1.7rem Lora;
 }

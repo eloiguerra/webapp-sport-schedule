@@ -26,7 +26,7 @@ export default function Profile() {
     {user.profile_photo &&
       <Container>
         <ProfileHeader user = {user}/>
-        <ProfileTabs userId = {user._id}/>
+        <ProfileTabs user = {user}/>
       </Container>
     }
     </>

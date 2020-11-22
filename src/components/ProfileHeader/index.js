@@ -7,7 +7,6 @@ import {Header, FormDescription, FormPhoto} from './styles';
 import LinkButton from '../../components/Buttons/LinkButton';
 import Textarea from '../../components/Textarea';
 import Modal from '../../components/Modals';
-import DragDropBox from '../../components/DragDropBox';
 import InputButton from '../../components/Buttons/InputButton';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -69,7 +68,7 @@ export default function ProfileHeader({user}) {
 
     api.put('/users', {
       description
-    }).then(response => {
+    }).then(() => {
       setUserData({...userData, description})
       setModalDescriptionVisible(false);
     }).catch(err => {
@@ -134,7 +133,7 @@ export default function ProfileHeader({user}) {
             <div className = "input-container">
               <label>
                 <FontAwesomeIcon icon = {faImage} />
-                {profilePhoto.name ? profilePhoto.name : 'Adicionar deste dispositivo'}
+                Adicionar deste dispositivo'
                 <input
                   ref = {profilePhotoInputRef}
                   type = "file"
@@ -142,7 +141,7 @@ export default function ProfileHeader({user}) {
                   accept = "image/*"
                 />
               </label>
-              <DragDropBox file = {profilePhoto} />
+              <small>{profilePhoto.name && profilePhoto.name} </small>
             </div>
             <InputButton
               type = "submit"

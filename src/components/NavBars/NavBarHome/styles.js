@@ -6,18 +6,23 @@ const Container = styled.div`
   .top-navbar{
     width: 100vw;
     height: 60px;
-    display: flex;
+
     position: fixed;
     top: 0;
 
+    display: flex;
+
     .top-menu{
       width: 100%;
-      background: var(--color-white);
       height: 100%;
+
+      background: var(--color-white);
       border-top-right-radius: 20px;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       padding: 0 20px;
       box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 
@@ -38,73 +43,7 @@ const Container = styled.div`
       ul{
         display: flex;
 
-        .search-bar{
-          display: flex;
-          flex-direction: row-reverse;
-
-          border: 1px solid var(--color-secondary);
-          border-radius: 500px;
-
-          transition: width .3s ease-in-out;
-
-          padding: 3px;
-
-          input{
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-
-            width: 180px;
-            padding-left: 8px;
-
-            border: 0;
-            background: transparent;
-
-            opacity: 0;
-          }
-
-          button{
-            border: 0;
-            border-radius: 50%;
-
-            width: 35px;
-
-            background: var(--color-white);
-            color: var(--color-secondary);
-
-            cursor: pointer;
-          }
-
-          .searched{
-            position: absolute;
-            top: 45px;
-            left: 0;
-
-            width: 200px;
-            height: 200px;
-
-            background: var(--color-white-two);
-
-            li{
-              color: var(--color-black);
-            }
-          }
-
-          &:focus-within{
-            width: 210px;
-
-            & input{
-              opacity: 1;
-            }
-
-            & .searched{
-              display: ${props => props.visibleSearchedUsers ? 'flex' : 'none'}
-            }
-          }
-        }
-
-        li{
+        li:not(.search-box){
           position: relative;
           display: block;
           margin: 0 10px;
@@ -160,6 +99,7 @@ const Container = styled.div`
     ul{
       @media screen and (max-width: 700px){
         display: flex;
+        justify-content: space-evenly;
       }
 
       li{
@@ -186,11 +126,6 @@ const Container = styled.div`
             width: 3px;
             height: 100%;
           }
-
-          @media screen and (max-width: 700px){
-            height: 3px;
-            width: 100%;
-          }
         }
 
         .icon{
@@ -211,8 +146,24 @@ const Container = styled.div`
           }
         }
 
+
         @media screen and (max-width: 700px){
           display: flex;
+        }
+      }
+
+      .mobile-search{
+        display: none;
+
+        button{
+          outline: none;
+          border: none;
+          background: transparent;
+          color: var(--color-white);
+        }
+
+        @media screen and (max-width: 701px){
+          display: block;
         }
       }
     }
@@ -250,6 +201,37 @@ export const Hamburguer = styled.div`
     @media screen and (max-width: 700px){
       display: none;
     }
+`;
+
+export const MobileSearch = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: ${props => props.visible ? 'flex' : 'none'};
+  flex-direction: column;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: var(--color-white-two);
+  z-index: 1000;
+
+  .search-bar{
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    background: var(--color-gray-light);
+
+    button{
+      border: none;
+      outline: none;
+
+      color: var(--color-primary);
+      font-size: 3rem;
+    }
+  }
 `;
 
 export default Container;

@@ -21,18 +21,17 @@ import {
 
 import sendButton from '../../assets/images/send-button.svg';
 
-export default function Feed({user}) {
+export default function Feed({user, by}) {
   const [publications, setPublications] = useState([]);
   const [toast, setToast] = useState({});
   const [paginationIndex, setPaginationIndex] = useState(1);
   const [loadPage, setLoadPage] = useState(false);
 
-  const [loadingScroll, setLoadingScroll] = useInfiniteScroll(callback);
+  const [loadingScroll, setLoadingScroll] = useInfiniteScroll(scrollCallback);
   const [{values}, handleChange] = useForm();
 
-  function callback(){
+  function scrollCallback(){
     setPaginationIndex(paginationIndex + 1);
-    //Lembrar de arrumar sa porra que
     setLoadingScroll(false);
   }
 
@@ -98,7 +97,9 @@ export default function Feed({user}) {
   }
 
   useEffect(() => {
-    if(paginationIndex === 1) setLoadPage(true);
+    if(paginationIndex === 1)
+      setLoadPage(true);
+
     api.get(`/friendsPublications?page=${paginationIndex}&limit=${3}`)
     .then(response => {
       setPublications([...publications, ...response.data]);
@@ -129,11 +130,10 @@ export default function Feed({user}) {
                 {item.likes.length}
               </small>
               <small className = "comments">
-              {item.comments.length === 1
-                ? `${item.comments.length} comentário`
-                : `${item.comments.length} comentários`
+              {item.comments.length > 1
+                ? `${item.comments.length} comentários`
+                : `${item.comments.length} comentário`
               }
-                {item.comments.length} comentários
               </small>
             </HudBar>
             : null
@@ -144,6 +144,7 @@ export default function Feed({user}) {
               <button
                 className = "toggle-reactions"
                 onClick = {() => handleLikeSubmit(item._id)}
+                // id = {() => item.likes.filter(like => )}
               >
                 <FontAwesomeIcon icon = {faThumbsUp} />
                 Curtir

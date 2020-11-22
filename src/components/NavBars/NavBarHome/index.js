@@ -3,10 +3,9 @@ import React, {useState} from 'react'
 import {useHistory} from 'react-router-dom';
 import {logout} from '../../../utils/auth';
 
-import api from '../../../services/api';
-
-import Container, {Hamburguer} from './styles';
 import NavLink from '../../NavLink';
+import Container, {Hamburguer, MobileSearch} from './styles';
+
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
@@ -17,34 +16,23 @@ import {
   faDoorOpen,
   faHome,
   faComment,
-  faMapMarkedAlt
+  faMapMarkedAlt,
+  faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../../../assets/images/miniLogo.png';
+import SearchBox from '../../SearchBox';
 
 export default function NavBarHome() {
   const history = useHistory();
   const [visibleSideBar, setVisibleSideBar] = useState(true);
   const [visibleDropdownConfig, setVisibleDropdownConfig] = useState(false);
-  const [visibleSearchedUsers, setVisibleSearchedUsers] = useState(false);
-  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [visibleMobileSearch, setVisibleMobileSearch] = useState(false);
 
   const toggleSideBar = () => setVisibleSideBar(!visibleSideBar);
   const toggleDropdownConfig = () => setVisibleDropdownConfig(!visibleDropdownConfig);
 
   const goToHome = () => history.push('/home');
-
-  const getSearch = (e) => {
-    api.get(`users/${e.target.value}`)
-    .then(response => {
-      const {data} = response;
-      setSearchedUsers(data);
-      setVisibleSearchedUsers(true);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
 
   const exit = () => {
     logout();
@@ -52,10 +40,10 @@ export default function NavBarHome() {
   }
 
   return (
+    <>
     <Container
       visible = {visibleSideBar}
       visibleDropdownConfig = {visibleDropdownConfig}
-      visibleSearchedUsers = {visibleSearchedUsers}
     >
       <div className = "top-navbar">
         <Hamburguer onClick = {toggleSideBar} className = "hamburguer">
@@ -69,23 +57,8 @@ export default function NavBarHome() {
             <p>SportSchedule</p>
           </div>
           <ul>
-            <li className = "search-bar">
-              <input
-                onChange = {(e) => getSearch(e)}
-                type = "text"
-                placeholder = "Buscar..."
-              />
-              <button><FontAwesomeIcon icon = {faSearch} /></button>
-              <ul className = "searched">
-                {searchedUsers.length && searchedUsers.map(user => (
-                  <li key = {user._id}>
-                    <NavLink
-                      path = {`/users/${user._id}`}
-                      text = {user.full_name}
-                    />
-                  </li>
-                ))}
-              </ul>
+            <li className = "search-box">
+              <SearchBox />
             </li>
             <li> <FontAwesomeIcon icon = {faBell} /> </li>
             <li onClick = {toggleDropdownConfig}>
@@ -171,9 +144,27 @@ export default function NavBarHome() {
               />
             </span>
           </li>
+          <li className = "mobile-search">
+            <button
+              onClick = {() => setVisibleMobileSearch(true)}
+              className = "icon"
+            >
+              <FontAwesomeIcon icon = {faSearch} />
+            </button>
+          </li>
         </ul>
       </div>
     </Container>
+
+    <MobileSearch visible = {visibleMobileSearch}>
+      <div className = "search-bar">
+        <button onClick = {() => setVisibleMobileSearch(false)}>
+          <FontAwesomeIcon icon = {faArrowLeft} />
+        </button>
+          <SearchBox />
+      </div>
+    </MobileSearch>
+    </>
   )
 }
 

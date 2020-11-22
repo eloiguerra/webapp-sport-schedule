@@ -80,7 +80,6 @@ export const ToolBar = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* padding: 8px 0; */
 
   border-top: 1px solid var(--color-gray);
   border-bottom: 1px solid var(--color-gray);
@@ -134,12 +133,15 @@ export const HudBar = styled.div`
   justify-content: space-around;
   align-items: center;
 
+  color: var(--color-gray);
+
+  padding-bottom: 8px;
+
   .likes{
-
-  }
-
-  .comments{
-
+    svg{
+      color: var(--color-gray);
+      margin-right: 4px;
+    }
   }
 `;
 
@@ -217,4 +219,12 @@ export const Comments = styled.div`
       }
     }
   }
+`;
+
+export const NoMoreContent = styled.div`
+  width: 95%;
+  max-width: 600px;
+  min-width: 300px;
+
+  background: url();
 `;
