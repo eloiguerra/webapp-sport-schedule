@@ -10,7 +10,6 @@ import {
   faEnvelope,
   faLock
 } from '@fortawesome/free-solid-svg-icons';
-import loginReferee from '../../assets/images/wave.svg';
 
 
 import api from '../../services/api';
