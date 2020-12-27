@@ -102,6 +102,7 @@ export default function Feed({user, by}) {
 
     api.get(`/friendsPublications?page=${paginationIndex}&limit=${3}`)
     .then(response => {
+      console.log(response);
       setPublications([...publications, ...response.data]);
       setLoadPage(false);
     })
@@ -109,7 +110,7 @@ export default function Feed({user, by}) {
 
   return (
     <Container>
-      {loadPage && <CircleLoader />}
+      {/* {loadPage && <CircleLoader />} */}
       {publications.map(item => (
         <PublicationWrapper key = {item._id}>
           <Header>

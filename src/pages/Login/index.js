@@ -10,6 +10,8 @@ import {
   faEnvelope,
   faLock
 } from '@fortawesome/free-solid-svg-icons';
+import loginReferee from '../../assets/images/wave.svg';
+
 
 import api from '../../services/api';
 
@@ -17,6 +19,7 @@ import NavLink from '../../components/NavLink';
 import InputBlock from '../../components/InputBlock';
 import InputButton from '../../components/Buttons/InputButton';
 import Toast from '../../components/Toast';
+
 
 export default function Login(props) {
   const [{values}, handleChange, handleSubmit] = useForm();
@@ -39,11 +42,11 @@ export default function Login(props) {
     else if(email.length > 40){
       validations.email = 'Email muito longo';
     }
-    else{
-      if(!regexEmail.test(String(email).toLowerCase())){
-        validations.email = 'Email inválido';
-      }
-    }
+    // else{
+    //   if(!regexEmail.test(String(email).toLowerCase())){
+    //     validations.email = 'Email inválido';
+    //   }
+    // }
 
     if(!password){
       validations.password = 'Campo obrigatório';
@@ -75,7 +78,6 @@ export default function Login(props) {
 
   return (
     <Container>
-      <div className = "image-container"></div>
       <div className = "form-container">
         <form onSubmit = {handleSubmit(loginValidation)}>
           <div className = "form-head">

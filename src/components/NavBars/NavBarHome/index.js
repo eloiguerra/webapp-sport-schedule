@@ -17,7 +17,8 @@ import {
   faHome,
   faComment,
   faMapMarkedAlt,
-  faArrowLeft
+  faArrowLeft,
+  faEllipsisV
 } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../../../assets/images/miniLogo.png';
@@ -27,10 +28,12 @@ export default function NavBarHome() {
   const history = useHistory();
   const [visibleSideBar, setVisibleSideBar] = useState(true);
   const [visibleDropdownConfig, setVisibleDropdownConfig] = useState(false);
+  const [visibleMobileDropdownConfig, setVisibleMobileDropdownConfig] = useState(false);
   const [visibleMobileSearch, setVisibleMobileSearch] = useState(false);
 
   const toggleSideBar = () => setVisibleSideBar(!visibleSideBar);
   const toggleDropdownConfig = () => setVisibleDropdownConfig(!visibleDropdownConfig);
+  const toggleMobileDropdownConfig = () => setVisibleMobileDropdownConfig(!visibleMobileDropdownConfig);
 
   const goToHome = () => history.push('/home');
 
@@ -44,6 +47,7 @@ export default function NavBarHome() {
     <Container
       visible = {visibleSideBar}
       visibleDropdownConfig = {visibleDropdownConfig}
+      visibleMobileDropdownConfig = {visibleMobileDropdownConfig}
     >
       <div className = "top-navbar">
         <Hamburguer onClick = {toggleSideBar} className = "hamburguer">
@@ -150,6 +154,25 @@ export default function NavBarHome() {
               className = "icon"
             >
               <FontAwesomeIcon icon = {faSearch} />
+            </button>
+          </li>
+          <li className = "mobile-search">
+            <button
+              onClick = {toggleMobileDropdownConfig}
+              className = "icon"
+            >
+              <FontAwesomeIcon icon = {faEllipsisV} />
+              <ul className = "dropdown-config">
+                <li>
+                  <NavLink
+                    color = "white" text = "Meu perfil"
+                    path = "/users" icon = {faUser}
+                  />
+                </li>
+                 <li onClick = {exit}>
+                  <FontAwesomeIcon icon = {faDoorOpen} /> Sair
+                </li>
+              </ul>
             </button>
           </li>
         </ul>

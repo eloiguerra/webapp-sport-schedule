@@ -52,7 +52,7 @@ export default function VisitProfile() {
   }
 
   const acceptFriendRequest = () => {
-    api.put('/friends', {id: friendData._id})
+    api.put('/friends', {id: userData.friendship.requester})
     .then(response => {
       console.log(response)
       setFriendData(response.data);
@@ -79,7 +79,46 @@ export default function VisitProfile() {
       }
       <Card>
         <h3>Deseja adicionar {userData.full_name} ?</h3>
-        {friendData.friend_request ?
+        {userData.friendship?.status === 0 || !userData.friendship &&
+          <Button onClick = {sendFriendRequest}>
+            <FontAwesomeIcon icon = {faUserPlus} />
+            Adicionar
+          </Button>
+        }
+        {userData.friendship?.status === 1 &&
+           <Button>
+             Solicitação de amizade pendente
+           </Button>
+        }
+        {userData.friendship?.status === 2 &&
+          <Button onClick = {acceptFriendRequest}>
+            <FontAwesomeIcon icon = {faUserPlus} />
+            Aceitar solicitação de amizade?
+          </Button>
+        }
+        {userData.friendship?.status === 3 &&
+           <Button>
+              Vocês já são amigos
+           </Button>
+        }
+
+         {/*  <Button>
+              Solicitação de amizade pendente
+            </Button>
+          <Button onClick = {acceptFriendRequest}>
+              <FontAwesomeIcon icon = {faUserPlus} />
+              Aceitar solicitação de amizade?
+            </Button>
+          <Button onClick = {sendFriendRequest}>
+            <FontAwesomeIcon icon = {faUserPlus} />
+            Adicionar
+          </Button>
+          <Button>
+            Vocês já são amigos
+          </Button>
+        } */}
+
+        {/* {friendData.friend_request ?
           friendData.friend === id ?
           <Button>
               Solicitação de amizade pendente
@@ -96,7 +135,7 @@ export default function VisitProfile() {
           : <Button>
               Vocês já são amigos
             </Button>
-        }
+        } */}
       </Card>
     </Container>
     </>

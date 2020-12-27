@@ -4,26 +4,43 @@ export const Container = styled.div`
   width: 100vw;
   height: 100vh;
 
-  background: var(--color-primary);
+  background: var(--color-secondary);
 
   display: flex;
-  justify-content: space-around;
   align-items: center;
 
   form {
-    position: relative;
+    width: 100%;
     min-width: 300px;
-    width: 50%;
-    height: 80%;
-    padding: 16px;
+    max-width: 550px;
+    height: 100%;
+    max-height: 600px;
+
+    margin: 0 auto;
+
     background: var(--color-white);
 
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+
+    .form-head{
+      display: flex;
+      align-items: center;
+
+      width: 100%;
+
+      font: 700 2rem Lora;
+      color: var(--color-white);
+
+      background: var(--color-primary);
+      img{
+        width: 100px;
+      }
+    }
 
     button {
       width: 80%;

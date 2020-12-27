@@ -14,6 +14,8 @@ import NavLink from '../../components/NavLink';
 import InputBlock from '../../components/InputBlock';
 import InputButton from '../../components/Buttons/InputButton';
 
+import logo from '../../assets/images/miniLogo.png';
+
 export default function Register(props) {
   const [{values}, handleChange, handleSubmit] = useForm();
   const [errors, setErrors] = useState({});
@@ -52,11 +54,11 @@ export default function Register(props) {
     else if(email.length < 6){
       validations.email = 'Email muito curto';
     }
-    else{
-      if(!regexEmail.test(String(email).toLowerCase())){
-        validations.email = 'Email inválido';
-      }
-    }
+    // else{
+    //   if(!regexEmail.test(String(email).toLowerCase())){
+    //     validations.email = 'Email inválido';
+    //   }
+    // }
 
     validations.email || validations.password || validations.full_name
     ? setErrors(validations)
@@ -75,6 +77,10 @@ export default function Register(props) {
   return (
     <Container>
       <form onSubmit = {handleSubmit(callback)}>
+        <div className = "form-head">
+          <img src = {logo} alt = "SportSchedule" />
+          <p>SportSchedule</p>
+        </div>
         <h2>Cadastrar-se</h2>
         <InputBlock
           inputType = "text"

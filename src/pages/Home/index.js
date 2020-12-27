@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     api.get('/users')
     .then(response => {
-      console.log(response);
+      console.log(response)
       setUser(response.data);
     })
     .catch(err => {

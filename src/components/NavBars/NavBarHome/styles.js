@@ -162,6 +162,16 @@ const Container = styled.div`
           color: var(--color-white);
         }
 
+        .dropdown-config{
+          position: absolute;
+          top: -123px;
+          right: 0;
+          display: ${props => props.visibleMobileDropdownConfig ? 'flex' : 'none'};
+          flex-direction: column;
+
+          background: var(--color-secondary);
+        }
+
         @media screen and (max-width: 701px){
           display: block;
         }
