@@ -1,13 +1,18 @@
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: column;
   align-items: center;
 
+  border-bottom: 1px solid var(--color-gray);
+  padding-bottom: 8px;
+  margin: 0 auto 8px auto;
+
   .photo-container{
     position: relative;
+    /* z-index: -1; */
 
     .profile-photo{
       width: 100px;

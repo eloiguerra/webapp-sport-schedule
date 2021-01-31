@@ -28,7 +28,7 @@ export const InputContainer = styled.div`
   }
 
   input[type=date] {
-    width: 180px;
+    width: 200px;
   }
 `;
 

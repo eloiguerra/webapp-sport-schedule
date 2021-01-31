@@ -6,6 +6,7 @@ import api from '../../services/api';
 
 import NavBarHome from '../../components/NavBars/NavBarHome';
 import Card from '../../components/Card/';
+import Feed from '../../components/Feed/';
 import {Container, Header, Button} from './styles';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -16,35 +17,36 @@ import {
 export default function VisitProfile() {
   const {id} = useParams();
   const [userData, setUserData] = useState({});
-  const [friendData, setFriendData] = useState({});
+  const [publications, setPublications] = useState({});
+  const [updateUserData, setUpdateUserData] = useState(false)
 
   useEffect(() => {
     api.get(`/visit/${id}`)
     .then(response => {
-      console.log(response);
+      // console.log(response);
       setUserData(response.data);
     })
     .catch(err => {
       console.log(err);
     });
-  }, [id])
+  }, [id, updateUserData])
 
   useEffect(() => {
-    api.get(`/friends/${id}`)
+    api.get(`/visitedPublications/${id}`)
     .then(response => {
-      console.log(response);
-      setFriendData(response.data);
+      // console.log(response);
+      setPublications(response.data);
     })
     .catch(err => {
       console.log(err);
     })
-  }, [id])
+  }, [])
 
   const sendFriendRequest = () => {
     api.post('/friends', {id})
     .then(response => {
-      console.log(response);
-      setFriendData(response.data);
+      const friendship = response.data;
+      setUserData({...userData, friendship})
     })
     .catch(err => {
       console.log(err);
@@ -54,11 +56,20 @@ export default function VisitProfile() {
   const acceptFriendRequest = () => {
     api.put('/friends', {id: userData.friendship.requester})
     .then(response => {
-      console.log(response)
-      setFriendData(response.data);
+      setUpdateUserData(!updateUserData);
     })
     .catch(err => {
       console.log(err);
+    })
+  }
+
+  const removeFriend = () => {
+    api.delete(`/friends/${id}`)
+    .then(response => {
+      setUpdateUserData(!updateUserData)
+    })
+    .catch(err => {
+      console.log(err)
     })
   }
 
@@ -78,8 +89,10 @@ export default function VisitProfile() {
         </Header>
       }
       <Card>
-        <h3>Deseja adicionar {userData.full_name} ?</h3>
-        {userData.friendship?.status === 0 || !userData.friendship &&
+        {(userData.friendship?.status === 0 || !userData.friendship?.status) &&
+          <h3>Deseja adicionar {userData.full_name} ? </h3>
+        }
+        {(userData.friendship?.status === 0 || !userData.friendship?.status) &&
           <Button onClick = {sendFriendRequest}>
             <FontAwesomeIcon icon = {faUserPlus} />
             Adicionar
@@ -97,46 +110,13 @@ export default function VisitProfile() {
           </Button>
         }
         {userData.friendship?.status === 3 &&
-           <Button>
-              Vocês já são amigos
-           </Button>
+          <Button onClick = {removeFriend}>
+            Remover amizade
+          </Button>
         }
-
-         {/*  <Button>
-              Solicitação de amizade pendente
-            </Button>
-          <Button onClick = {acceptFriendRequest}>
-              <FontAwesomeIcon icon = {faUserPlus} />
-              Aceitar solicitação de amizade?
-            </Button>
-          <Button onClick = {sendFriendRequest}>
-            <FontAwesomeIcon icon = {faUserPlus} />
-            Adicionar
-          </Button>
-          <Button>
-            Vocês já são amigos
-          </Button>
-        } */}
-
-        {/* {friendData.friend_request ?
-          friendData.friend === id ?
-          <Button>
-              Solicitação de amizade pendente
-            </Button>
-          : <Button onClick = {acceptFriendRequest}>
-              <FontAwesomeIcon icon = {faUserPlus} />
-              Aceitar solicitação de amizade?
-            </Button>
-        : friendData === "" ?
-          <Button onClick = {sendFriendRequest}>
-            <FontAwesomeIcon icon = {faUserPlus} />
-            Adicionar
-          </Button>
-          : <Button>
-              Vocês já são amigos
-            </Button>
-        } */}
+        {console.log(publications)}
       </Card>
+      {publications && <Feed by = 'visited' id = {id} user = {{...userData, ...publications}} />}
     </Container>
     </>
   )

@@ -22,6 +22,8 @@ import useMap from '../../hooks/useMap';
 import useForm from '../../hooks/useForm';
 
 import api from '../../services/api';
+import CircleLoader from '../../components/Loaders/CircleLoader';
+import InputButton from '../../components/Buttons/InputButton';
 
 const libraries = ["places"];
 const containerStyle = {
@@ -44,15 +46,17 @@ export default function Games() {
 
   const {mapError, currentCordinates} = map;
   const center = {
-    lat: currentCordinates.lat,
-    lng: currentCordinates.lng
+    lat: currentCordinates?.lat,
+    lng: currentCordinates?.lng
   };
 
   const [sports, setSports] = useState();
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [selectedCoordenates, setSelectedCoordenades] = useState({});
   const [modalHelpMap, setModalHelpMap] = useState(false);
   const [modalGame, setModalGame] = useState(false);
+  const [loadPage, setLoadPage] = useState(false);
 
   useEffect(() => {
     api.get('/sports')
@@ -76,33 +80,46 @@ export default function Games() {
   }, []);
 
   const onMapClick = useCallback(event => {
-    setMarkers(prevMarkers => [
+    setSelectedCoordenades({
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    })
+    /* setMarkers(prevMarkers => [
       ...prevMarkers,
       {
         lat: event.latLng.lat(),
         lng: event.latLng.lng(),
-    }]);
+    }]); */
     setModalGame(true);
   }, []);
 
   const cancelGame = () => {
-    setMarkers(prevMarkers => prevMarkers.splice(-1, 1));
+    // setMarkers(prevMarkers => prevMarkers.splice(-1, 1));
     setModalGame(false);
   }
 
   const newGame = () => {
-    const {name, date, sport, description} = values;
-    const {lat, lng} = markers[markers.length-1];
+    const {
+      name, date, hour,
+      sport, description
+    } = values;
+
+    // const {lat, lng} = markers[markers.length-1];
+    const {lat, lng} = selectedCoordenates;
+
     api.post('/games', {
       name,
       description,
       date,
+      hour,
       lat,
       lng,
       sport
     })
     .then(response => {
-      console.log(response);
+      setMarkers([...markers, response.data])
+      console.log(markers);
+      setModalGame(false);
     })
     .catch(err => {
       console.log(err);
@@ -117,10 +134,11 @@ export default function Games() {
 
   return (
     <>
+      {loadPage && <CircleLoader fullScreen = {true} />}
       <NavBarHome />
       <Container>
         <MapContainer>
-          {mapError ?
+          {(!center || mapError) ?
             <div className = "map-erro-container">
 
             </div>
@@ -149,9 +167,12 @@ export default function Games() {
                   <div>
                     <h2>{selected.name}</h2>
                     <p>{selected.description}</p>
-                    <small>
-                      {moment(selected.date).format('DD [de] MMMM [de] YYYY')}
-                    </small>
+                    <p>
+                      Data: {moment(selected.date).format('DD [de] MMMM [de] YYYY')}
+                    </p>
+                    <p>
+                      Horário: {selected.hour}
+                    </p>
                   </div>
                 </InfoWindow> : null}
               </GoogleMap>
@@ -178,17 +199,25 @@ export default function Games() {
                 change = {handleChange}
                 name = "sport"
               />
-               <InputBlock
-                inputType = "date"
-                name = "date"
-                onChange = {handleChange}
-              />
+              <div>
+                <InputBlock
+                  inputType = "date"
+                  name = "date"
+                  onChange = {handleChange}
+                />
+                <InputBlock
+                  inputType = "text"
+                  placeholder = "Horário"
+                  name = "hour"
+                  onChange = {handleChange}
+                />
+              </div>
               <TextArea
                 name = "description"
                 onChange = {handleChange}
                 placeholder = "Descrição do evento"
               />
-              <button type = "submit">Enviar</button>
+              <InputButton type = "submit" text = "Enviar" />
             </FormGame>
           </div>
         </Modal>

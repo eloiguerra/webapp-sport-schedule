@@ -11,7 +11,16 @@ export const Container = styled.div`
   height: ${props => props.fullScreen ? '100vh' : '100%'};
   width: ${props => props.fullScreen ? '100vw' : '100%'};
 
-  background: ${props => props.fullScreen && 'rgba(0, 0, 0, 0.5)'};
+  position: ${props => props.fullScreen && 'fixed'};
+  top: 0;
+  left: 0;
+
+  background: ${props => props.fullScreen && 'rgba(0, 0, 0, 0.1)'};
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Circle = styled.div`

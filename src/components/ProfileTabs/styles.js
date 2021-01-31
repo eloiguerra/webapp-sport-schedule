@@ -5,8 +5,6 @@ export const Container = styled.div`
 
   width: 100%;
 
-  border-top: 1px solid var(--color-gray);
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,7 +43,7 @@ export const Option = styled.li`
 `;
 
 export const ContainerPublications = styled.div`
-
+  width: 100%;
 `;
 
 export const ContainerFriends = styled.div`

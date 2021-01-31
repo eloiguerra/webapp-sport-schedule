@@ -30,7 +30,7 @@ export default function routes() {
       <Route path = "/register" component = {Register} />
       <PrivateRoute path = "/home" component = {Home} />
       <PrivateRoute path = "/games" component = {Games} />
-      <PrivateRoute path = "/chat" component = {Chat} />
+      {/* <PrivateRoute path = "/chat" component = {Chat} /> */}
       <PrivateRoute path = "/users" component = {Profile} exact />
       <PrivateRoute path = "/users/:id" component = {VisitProfile} exact />
     </Switch>

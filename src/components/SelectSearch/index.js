@@ -24,7 +24,7 @@ export default function SelectSearch({data, change, name}){
   }
 
   return (
-      <SelectBox>
+    <SelectBox>
         <SelectedContainer
           onClick = {() => setToggleOptions(!toggleOptions)}
         >

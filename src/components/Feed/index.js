@@ -15,17 +15,24 @@ import {
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
-  faThumbsUp,
+  // faThumbsUp,
   faCommentAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 import sendButton from '../../assets/images/send-button.svg';
+import Modal from '../Modals';
 
-export default function Feed({user, by}) {
+export default function Feed({user, by, id = 0}) {
   const [publications, setPublications] = useState([]);
   const [toast, setToast] = useState({});
   const [paginationIndex, setPaginationIndex] = useState(1);
   const [loadPage, setLoadPage] = useState(false);
+  const [modalEditPublication, setModalEditPublication] = useState(
+    {
+      visible: false,
+      id: ''
+    }
+  )
 
   const [loadingScroll, setLoadingScroll] = useInfiniteScroll(scrollCallback);
   const [{values}, handleChange] = useForm();
@@ -35,7 +42,7 @@ export default function Feed({user, by}) {
     setLoadingScroll(false);
   }
 
-  const handleLikeSubmit = publication => {
+  /* const handleLikeSubmit = publication => {
     api.post('/publications/likes', {
       publication
     })
@@ -54,7 +61,7 @@ export default function Feed({user, by}) {
     .catch(err => {
       console.log(err);
     })
-  }
+  } */
 
   const handleCommentSubmit = e => {
     e.preventDefault();
@@ -100,17 +107,39 @@ export default function Feed({user, by}) {
     if(paginationIndex === 1)
       setLoadPage(true);
 
-    api.get(`/friendsPublications?page=${paginationIndex}&limit=${3}`)
-    .then(response => {
-      console.log(response);
-      setPublications([...publications, ...response.data]);
-      setLoadPage(false);
-    })
+    if(by === 'owner'){
+      api.get(`/ownerPublications?page=${paginationIndex}&limit=${3}`)
+      .then(response => {
+        console.log(response);
+        setPublications([...publications, ...response.data]);
+        setLoadPage(false);
+      })
+    }
+    else if(by === 'visited'){
+      api.get(`/visitedPublications/${id}`)
+      .then(response => {
+        console.log(response);
+        setPublications(response.data);
+        setLoadPage(false);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+    else{
+      api.get(`/friendsPublications?page=${paginationIndex}&limit=${3}`)
+      .then(response => {
+        console.log(response);
+        setPublications([...publications, ...response.data]);
+        setLoadPage(false);
+      })
+    }
   }, [paginationIndex])
 
   return (
+    <>
     <Container>
-      {/* {loadPage && <CircleLoader />} */}
+      {loadPage && <CircleLoader fullScreen = {true} />}
       {publications.map(item => (
         <PublicationWrapper key = {item._id}>
           <Header>
@@ -118,6 +147,14 @@ export default function Feed({user, by}) {
               <img src = {item.user.profile_photo.url} alt = "" />
               <p>{item.user.full_name}</p>
             </div>
+            {/* {by === 'owner' ?
+              <LinkButton onClick = {() => setModalEditPublication({
+                visible: true,
+                ...item
+              })}> Editar </LinkButton>
+            :
+              <p>{item.sport.name}</p>
+            } */}
             <p>{item.sport.name}</p>
           </Header>
           <Content>
@@ -126,10 +163,10 @@ export default function Feed({user, by}) {
           </Content>
           {item.likes.length || item.comments.length ?
             <HudBar>
-              <small className = "likes">
+              {/* <small className = "likes">
                 <FontAwesomeIcon icon = {faThumbsUp} />
                 {item.likes.length}
-              </small>
+              </small> */}
               <small className = "comments">
               {item.comments.length > 1
                 ? `${item.comments.length} comentários`
@@ -141,16 +178,15 @@ export default function Feed({user, by}) {
           }
 
           <ToolBar>
-            <div className = "container-reactions">
+           {/*  <div className = "container-reactions">
               <button
                 className = "toggle-reactions"
                 onClick = {() => handleLikeSubmit(item._id)}
-                // id = {() => item.likes.filter(like => )}
               >
                 <FontAwesomeIcon icon = {faThumbsUp} />
                 Curtir
               </button>
-            </div>
+            </div> */}
             <label htmlFor = {`textarea-${item._id}`}>
               <FontAwesomeIcon icon = {faCommentAlt}/>
               Comentar
@@ -196,5 +232,14 @@ export default function Feed({user, by}) {
         />
       }
     </Container>
+    {modalEditPublication.visible &&
+      <Modal onClose = {() => setModalEditPublication({visible: false})}>
+        <h3 className = "head">Editar publicação</h3>
+        <div className = "body">
+
+        </div>
+      </Modal>
+    }
+  </>
   )
 }

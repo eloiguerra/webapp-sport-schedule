@@ -14,6 +14,7 @@ import {
   faImage
 } from '@fortawesome/free-solid-svg-icons';
 import SelectSearch from '../SelectSearch';
+import Toast from '../Toast';
 
 export default function PostBox({user}) {
   const imageInputRef = useRef(null);
@@ -23,8 +24,9 @@ export default function PostBox({user}) {
   const [modalPostVisible, setModalPostVisible] = useState(false);
   const [sports, setSports] = useState([]);
   const [publication, setPublication] = useState({});
+  const [toast, setToast] = useState({});
 
-  const newPost = async () => {
+  const newPost = async (post = {}) => {
     const {sport, description} = values;
     const image = imageInputRef.current?.files;
 
@@ -80,6 +82,12 @@ export default function PostBox({user}) {
         })
       }
       setModalPostVisible(false);
+      setToast({
+        type: 'success',
+        title: 'Postado!',
+        message: 'Postagem feita com sucesso',
+        visible: true
+      });
     }
   }
 
@@ -167,6 +175,13 @@ export default function PostBox({user}) {
           </FormContainer>
         </div>
       </Modal>
+    }
+    {toast.visible &&
+      <Toast
+        type = {toast.type}
+        title = {toast.title}
+        message = {toast.message}
+      />
     }
     </>
   )

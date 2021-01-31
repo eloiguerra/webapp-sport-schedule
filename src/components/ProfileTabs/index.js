@@ -29,7 +29,6 @@ export default function ProfileTabs({user}) {
     api.get('/friends')
     .then(response => {
       setFriends(response.data);
-      console.log(response.data);
     })
     .catch(error => {
       console.log(error);
@@ -41,7 +40,6 @@ export default function ProfileTabs({user}) {
       <OptionsList>
         <Option
           onClick = {displayPublicationsTab}
-          className = "active"
         > Linha do tempo </Option>
         <Option
           onClick = {displayFriendTab}

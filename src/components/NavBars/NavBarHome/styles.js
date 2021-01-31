@@ -11,6 +11,7 @@ const Container = styled.div`
     top: 0;
 
     display: flex;
+    z-index: 100;
 
     .top-menu{
       width: 100%;
@@ -64,8 +65,71 @@ const Container = styled.div`
             right: 0;
             width: 200px;
             background: var(--color-secondary);
-            display: ${props => props.visibleDropdownConfig ? 'flex' : 'none'};
             flex-direction: column;
+
+            &.dropdown-config{
+              display: ${props => props.visibleDropdownConfig ? 'flex' : 'none'};
+            }
+
+            &.notifications{
+              display: ${props => props.visibleNotification ? 'flex' : 'none'};
+              background: var(--color-gray-light);
+              width: 300px;
+
+              li{
+                display: flex;
+                align-items: center;
+
+                height: 100%;
+                padding: 8px;
+
+                border-bottom: 1px solid var(--color-gray);
+
+                img{
+                  width: 40px;
+                  height: 40px;
+
+                  margin: 0 8px;
+
+                  border-radius: 50%;
+                }
+
+                .info-container{
+                  display: flex;
+                  flex-direction: column;
+
+                  p{
+                    margin-left: 8px;
+                    color: var(--color-black);
+                    font-size: 1.5rem;
+                  }
+
+                  .buttons{
+                    display: flex;
+                    justify-content: space-around;
+
+                    button{
+                      border: none;
+                      outline: none;
+                      cursor: pointer;
+
+                      color: var(--color-white);
+                      padding: 4px;
+
+                      border-radius: 4px;
+
+                      &.accept{
+                        background: var(--color-success)
+                      }
+
+                      &.refuse{
+                        background: var(--color-error);
+                      }
+                    }
+                  }
+                }
+              }
+            }
 
             li{
               width: 100%;
@@ -152,7 +216,7 @@ const Container = styled.div`
         }
       }
 
-      .mobile-search{
+      .mobile-modal{
         display: none;
 
         button{
@@ -213,7 +277,7 @@ export const Hamburguer = styled.div`
     }
 `;
 
-export const MobileSearch = styled.div`
+export const FullScreenModal = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -227,7 +291,7 @@ export const MobileSearch = styled.div`
   background: var(--color-white-two);
   z-index: 1000;
 
-  .search-bar{
+  .header{
     width: 100%;
 
     display: flex;
@@ -240,6 +304,50 @@ export const MobileSearch = styled.div`
 
       color: var(--color-primary);
       font-size: 3rem;
+    }
+  }
+
+  .content{
+    display: flex;
+    background: var(--color-gray-light);
+
+    img{
+      width: 40px;
+      height: 40px;
+
+      margin: 0 8px;
+
+      border-radius: 50%;
+    }
+
+    p{
+      margin-left: 8px;
+      color: var(--color-black);
+      font-size: 1.5rem;
+    }
+
+    .buttons{
+      display: flex;
+      justify-content: space-around;
+
+      button{
+        border: none;
+        outline: none;
+        cursor: pointer;
+
+        color: var(--color-white);
+        padding: 4px;
+
+        border-radius: 4px;
+
+        &.accept{
+          background: var(--color-success)
+        }
+
+        &.refuse{
+          background: var(--color-error);
+        }
+      }
     }
   }
 `;

@@ -20,7 +20,7 @@ export const PublicationWrapper = styled.div`
   padding: 8px;
 
   width: 95%;
-  max-width: 600px;
+  max-width: 800px;
   min-width: 300px;
 
   display: flex;
@@ -55,7 +55,6 @@ export const Header = styled.div`
 
     p{
       font-weight: 700;
-
       margin-left: 8px;
     }
   }

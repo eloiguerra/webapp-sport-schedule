@@ -45,18 +45,23 @@ export const OptionsContainer = styled.div`
 export const Option = styled.div`
   color: var(--color-black);
 
-  padding: 12px 24px;
+  width: 232px;
+  line-height: 44px;
 
   cursor: pointer;
 
   label{
+    display: inline-block;
+
     cursor: pointer;
+    width: 100%;
 
     font-weight: 700;
   }
 
   input{
     display: none;
+    width: 100%;
   }
 
   &:hover{

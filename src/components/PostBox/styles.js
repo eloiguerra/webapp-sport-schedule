@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 95%;
-  max-width: 600px;
+  max-width: 800px;
   min-width: 300px;
 
   padding: 8px;
+  margin: 0 auto;
 
   border-radius: 8px;
   background: var(--color-white);
